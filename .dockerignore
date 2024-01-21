@@ -1,0 +1,46 @@
+# .dockerignore for Python Django projects
+
+# Exclude version control files and directories
+.git
+.gitignore
+**/.git
+**/.gitignore
+
+# Exclude Python bytecode files
+__pycache__
+*.pyc
+
+# Exclude local development files
+*.log
+*.sqlite3
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite
+
+# Exclude test and documentation files
+**/tests/
+**/docs/
+
+# Exclude system-specific files
+.DS_Store
+Thumbs.db
+
+# Exclude Docker-related files
+Dockerfile
+.dockerignore
+
+# Exclude development and CI files
+.env
+*.env
+.vscode/
+.idea/
+*.iml
+*.pyproj
+*.pyc
+*.pyo
+*.pyd
+
+# Exclude node_modules if you have a frontend part in the project
+node_modules/
