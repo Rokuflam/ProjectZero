@@ -4,11 +4,11 @@ services:
   app:
     build:
       context: ..
-      dockerfile: docker/Dockerfile
+      dockerfile: ./docker/Dockerfile
     ports:
       - "8000:8000"
     volumes:
-      - ./app:/app
+      - ../backend:/app
       - dev-static-data:/vol/web
     command: >
       sh -c "python manage.py migrate &&
