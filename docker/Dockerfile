@@ -1,13 +1,13 @@
 FROM python:3.12-alpine3.17
-LABEL maintainer="roman.kulibaba@wesoftyou.com"
+LABEL maintainer="kulibabaroman6@gmail.com"
 
+ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-
-COPY poetry.lock poetry.lock
-COPY pyproject.toml pyproject.toml
 
 COPY ./scripts /scripts
 COPY ./backend /app
+COPY pyproject.toml poetry.lock /app/
+
 WORKDIR /app
 EXPOSE 8000
 
