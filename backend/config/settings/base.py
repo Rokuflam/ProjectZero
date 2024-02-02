@@ -47,6 +47,9 @@ INSTALLED_APPS = [
     # External modules
     'rest_framework',
     'drf_spectacular',
+
+    # Internal modules
+    'apps.user.apps.UserConfig',
 ]
 
 MIDDLEWARE = [
@@ -140,6 +143,8 @@ STATIC_ROOT = '/vol/web/static'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# TODO: after model is done set here AUTH_USER_MODEL = 'user.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
