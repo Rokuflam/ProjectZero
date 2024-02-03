@@ -102,6 +102,15 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by email
+    # TODO: bottom line for allauth later
+    # 'allauth.account.auth_backends.AuthenticationBackend',
+)
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -144,7 +153,7 @@ STATIC_ROOT = '/vol/web/static'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# TODO: after model is done set here AUTH_USER_MODEL = 'user.User'
+AUTH_USER_MODEL = 'user.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
@@ -156,3 +165,13 @@ SPECTACULAR_SETTINGS = {
     'VERSION': '1.0.0',
     'COMPONENT_SPLIT_REQUEST': True
 }
+
+# Django Admin settings
+
+ADMIN_SITE_HEADER = os.environ.get('ADMIN_SITE_HEADER', 'ProjectZero')
+
+ADMIN_SITE_TITLE = os.environ.get('ADMIN_SITE_TITLE', 'ProjectZero')
+
+ADMIN_INDEX_TITLE = os.environ.get('ADMIN_INDEX_TITLE', 'Welcome to ProjectZero Admin Panel')
+
+ADMIN_SITE_URL = os.environ.get('ADMIN_SITE_URL', default='http://localhost:8000/admin/')
