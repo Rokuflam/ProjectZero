@@ -7,14 +7,14 @@ from django.db import models
 from django.utils.translation import gettext as _
 from django.contrib.auth.models import (
     AbstractBaseUser,
-    BaseUserManager,
+    UserManager,
     PermissionsMixin,
 )
 
 from apps.core.db import ConcatOp
 
 
-class UserManager(BaseUserManager):
+class CustomUserManager(UserManager):
     """Manager for users."""
 
     def create_user(self, email, password=None, **extra_fields):
@@ -93,7 +93,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name=_('Date Joined')
     )
 
-    objects = UserManager()
+    objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
 

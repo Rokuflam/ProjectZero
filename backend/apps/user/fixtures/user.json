@@ -1,6 +1,6 @@
 [
   {
-    "model": "users.user",
+    "model": "user.user",
     "pk": "ce18b719-9234-4894-b68d-101f52bd988b",
     "fields": {
       "password": "pbkdf2_sha256$600000$k6MCwb2setHwK6VSdqIzYs$7jbHT9IAxlT0abGny5c27/s2LTZ4wFodCtG+P9RBGO4=",
@@ -10,8 +10,6 @@
       "email": "admin@projectzero.com",
       "first_name": null,
       "last_name": null,
-      "workspace_name": null,
-      "position": null,
       "avatar": "",
       "is_active": true,
       "is_staff": true,
