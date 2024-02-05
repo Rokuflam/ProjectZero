@@ -8,7 +8,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ../backend:/backend
+      - ../backend:/usr/src/backend
       - dev-static-data:/vol/web
     environment:
       - DB_HOST=db

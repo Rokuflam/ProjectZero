@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'drf_spectacular',
 
     # Internal modules
+    'apps.core.apps.UserConfig',
     'apps.user.apps.UserConfig',
 ]
 

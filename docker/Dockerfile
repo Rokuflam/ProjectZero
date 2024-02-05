@@ -5,10 +5,12 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 COPY ./scripts /scripts
-COPY ./backend /backend
-COPY pyproject.toml poetry.lock /backend/
 
-WORKDIR /backend
+WORKDIR /usr/src/backend
+COPY ./backend .
+COPY pyproject.toml .
+COPY poetry.lock .
+
 EXPOSE 8000
 
 RUN python -m venv /py && \
