@@ -49,11 +49,6 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'drf_spectacular',
 
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
-
     # Internal modules
     'apps.core.apps.UserConfig',
     'apps.user.apps.UserConfig',
@@ -69,7 +64,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -113,10 +107,6 @@ DATABASES = {
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
-
-    # `allauth` specific authentication methods, such as login by email
-    # TODO: bottom line for allauth later
-    # 'allauth.account.auth_backends.AuthenticationBackend',
 )
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -163,14 +153,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'user.User'
 
-# Configure Allauth
-ACCOUNT_EMAIL_VERIFICATION = 'roman.kulibaba@wesoftyou.com'
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_SESSION_REMEMBER = True
-
 # Configure Django Rest Framework
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
@@ -179,20 +161,19 @@ REST_FRAMEWORK = {
     ),
 }
 
-
+# drf-spectacular settings
 SPECTACULAR_SETTINGS = {
     'TITLE': 'ProjectZero',
     'DESCRIPTION': 'Template to start any project on Django/DRF',
     'VERSION': '1.0.0',
-    'COMPONENT_SPLIT_REQUEST': True
+    'COMPONENT_SPLIT_REQUEST': True,
+    'SERVE_INCLUDE_SCHEMA': False,
 }
+SHOW_DOCS = bool(int(os.environ.get('SHOW_DOCS', 1)))
 
 # Django Admin settings
 
 ADMIN_SITE_HEADER = os.environ.get('ADMIN_SITE_HEADER', 'ProjectZero')
-
 ADMIN_SITE_TITLE = os.environ.get('ADMIN_SITE_TITLE', 'ProjectZero')
-
 ADMIN_INDEX_TITLE = os.environ.get('ADMIN_INDEX_TITLE', 'Welcome to ProjectZero Admin Panel')
-
 ADMIN_SITE_URL = os.environ.get('ADMIN_SITE_URL', default='http://localhost:8000/admin/')
