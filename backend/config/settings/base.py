@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 import os
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -161,9 +162,12 @@ REST_FRAMEWORK = {
     ),
 }
 
+# Simple JWT/Token settings
 SIMPLE_JWT = {
-  # It will work instead of the default serializer(TokenObtainPairSerializer).
-  "TOKEN_OBTAIN_SERIALIZER": "apps.user.serializers.CustomTokenObtainPairSerializer",
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=1),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+
+    "TOKEN_OBTAIN_SERIALIZER": "apps.user.serializers.CustomTokenObtainPairSerializer",
 }
 
 # drf-spectacular settings

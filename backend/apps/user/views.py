@@ -4,7 +4,10 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.response import Response
 from apps.core.utils import get_tokens_for_user
 
-from .serializers import UserSerializer
+from .serializers import (
+    UserSerializer,
+    RetrieveUserSerializer,
+)
 
 
 class CreateUserView(generics.CreateAPIView):
@@ -30,3 +33,12 @@ class ManageUserView(generics.RetrieveUpdateAPIView):
     def get_object(self):
         """Retrieve and return the authenticated user."""
         return self.request.user
+
+    def get_serializer_class(self):
+        """Return the serializer class based on the request method."""
+        if self.request.method in ['GET']:
+            # Use a different serializer for get request
+            return RetrieveUserSerializer
+        else:
+            # Use the default serializer for other request methods (e.g., PUT, PATCH)
+            return self.serializer_class

@@ -27,6 +27,16 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
+class RetrieveUserSerializer(UserSerializer):
+    """Serializer for retrieving data from user object."""
+
+    class Meta(UserSerializer.Meta):
+        fields = [
+            'id', 'email', 'username', 'full_name', 'avatar', 'last_login',
+            'date_joined', 'role', 'is_active', 'is_staff'
+        ]
+
+
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     """Serializer for the obtaining token"""
     def validate(self, attrs):
