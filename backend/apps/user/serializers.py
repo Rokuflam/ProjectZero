@@ -8,7 +8,10 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = ['id', 'email', 'password']
+        fields = [
+            'id', 'email', 'password', 'username', 'full_name', 'avatar',
+            'last_login', 'date_joined', 'role'
+        ]
         extra_kwargs = {'password': {'write_only': True, 'min_length': 5}}
 
     def create(self, validated_data):
@@ -25,16 +28,6 @@ class UserSerializer(serializers.ModelSerializer):
             user.save()
 
         return user
-
-
-class RetrieveUserSerializer(UserSerializer):
-    """Serializer for retrieving data from user object."""
-
-    class Meta(UserSerializer.Meta):
-        fields = [
-            'id', 'email', 'username', 'full_name', 'avatar', 'last_login',
-            'date_joined', 'role', 'is_active', 'is_staff'
-        ]
 
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
