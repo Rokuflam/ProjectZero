@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "ProjectZero"
 version = "0.1.0"
-description = ""
+description = "Django skeleton with most useful functionalities for new projects."
 authors = ["Roman <98953084+Rokuflam@users.noreply.github.com>"]
 readme = "README.md"
 
@@ -11,11 +11,11 @@ Django = "^5.0"
 djangorestframework = "^3.14"
 drf-spectacular = "^0.27"
 djangorestframework-simplejwt = "^5.3"
-django-allauth = "^0.60"
 psycopg2-binary = "^2.9"
 gunicorn = "^21.2"
 whitenoise = "^6.6"
 pillow = "^10.2"
+sentry-sdk = {version = "^1.40", extras = ["django"]}
 
 [tool.poetry.dev-dependencies]
 flake8 = "^7.0"

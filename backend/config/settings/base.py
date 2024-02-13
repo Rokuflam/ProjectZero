@@ -181,8 +181,7 @@ SPECTACULAR_SETTINGS = {
 SHOW_DOCS = bool(int(os.environ.get('SHOW_DOCS', 1)))
 
 # Django Admin settings
-
 ADMIN_SITE_HEADER = os.environ.get('ADMIN_SITE_HEADER', 'ProjectZero')
 ADMIN_SITE_TITLE = os.environ.get('ADMIN_SITE_TITLE', 'ProjectZero')
 ADMIN_INDEX_TITLE = os.environ.get('ADMIN_INDEX_TITLE', 'Welcome to ProjectZero Admin Panel')
-ADMIN_SITE_URL = os.environ.get('ADMIN_SITE_URL', default='http://localhost:8000/admin/')
+ADMIN_SITE_URL = os.environ.get('ADMIN_SITE_URL', 'http://localhost:8000/admin/')

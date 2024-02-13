@@ -10,7 +10,6 @@ WORKDIR /usr/src/backend
 COPY ./backend .
 COPY pyproject.toml .
 COPY poetry.lock .
-
 EXPOSE 8000
 
 RUN python -m venv /py && \
