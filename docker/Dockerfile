@@ -17,7 +17,7 @@ RUN python -m venv /py && \
     apk add --update --no-cache postgresql-client jpeg-dev && \
     apk add --update --no-cache --virtual .tmp-build-deps \
         build-base postgresql-dev musl-dev zlib zlib-dev linux-headers && \
-    /py/bin/pip install poetry && \
+    /py/bin/pip install poetry pylint && \
     /py/bin/poetry config virtualenvs.create false && \
     /py/bin/poetry install --no-dev && \
     rm -rf /tmp && \

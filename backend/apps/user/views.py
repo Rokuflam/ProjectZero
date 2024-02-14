@@ -1,7 +1,11 @@
+"""
+Views
+"""
 from django.contrib.auth import get_user_model
 from rest_framework import generics, permissions, status
-from rest_framework_simplejwt.authentication import JWTAuthentication
+
 from rest_framework.response import Response
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from apps.core.utils import get_tokens_for_user
 
 from .serializers import UserSerializer

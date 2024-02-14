@@ -23,6 +23,7 @@ A DRF project to start new projects faster and better.
 - CRUD operations
 - Testing with `unittest`
 - Continuous Integration with GitHub Actions
+- Linting using Pylint
 
 ## Prerequisites
 
@@ -81,8 +82,13 @@ Make sure you have the following installed on your machine:
     ```
 
 - Run tests
-   ```bash
+    ```bash
     docker-compose -f docker/docker-compose-local.yml run --rm app sh -c "python manage.py test apps"
+    ```
+
+- Pylint check
+    ```bash
+    docker-compose -f docker/docker-compose-local.yml run --rm app sh -c "pylint --rcfile=.pylintrc .\apps\"
     ```
 
 ## API Documentation
@@ -97,3 +103,4 @@ Make sure you have the following installed on your machine:
 - [Docker](https://www.docker.com/)
 - [Poetry](https://python-poetry.org/)
 - [Sentry](https://docs.sentry.io/)
+- [Pylint](https://pypi.org/project/pylint/)

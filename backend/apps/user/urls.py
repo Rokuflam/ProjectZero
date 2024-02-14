@@ -9,7 +9,7 @@ from rest_framework_simplejwt.views import (
 )
 from apps.user import views
 
-app_name = 'user'
+app_name = 'user'  # pylint: disable=invalid-name
 
 urlpatterns = [
     path('create/', views.CreateUserView.as_view(), name='create'),
