@@ -6,16 +6,16 @@ authors = ["Roman <98953084+Rokuflam@users.noreply.github.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
 Django = "^5.0"
 djangorestframework = "^3.14"
-drf-spectacular = "^0.27"
 djangorestframework-simplejwt = "^5.3"
-psycopg2-binary = "^2.9"
+drf-spectacular = "^0.27"
 gunicorn = "^21.2"
-whitenoise = "^6.6"
 pillow = "^10.2"
+psycopg2-binary = "^2.9"
+python = "^3.12"
 sentry-sdk = {version = "^1.40", extras = ["django"]}
+whitenoise = "^6.6"
 
 [tool.poetry.dev-dependencies]
 pylint = "^3.0"
