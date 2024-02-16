@@ -12,5 +12,6 @@ python manage.py collectstatic --settings="$DJANGO_SETTINGS_MODULE" --no-input
 python manage.py migrate --settings="$DJANGO_SETTINGS_MODULE"
 python manage.py loaddata --settings="$DJANGO_SETTINGS_MODULE" user
 
-# Run Gunicorn with the specified DJANGO_SETTINGS_MODULE
-exec gunicorn config.asgi:application -k uvicorn.workers.UvicornWorker -b 0.0.0.0:8000 --env DJANGO_SETTINGS_MODULE="$DJANGO_SETTINGS_MODULE"
+# Run Uvicorn with the specified DJANGO_SETTINGS_MODULE
+export DJANGO_SETTINGS_MODULE="$DJANGO_SETTINGS_MODULE"
+exec uvicorn config.asgi:application --host 0.0.0.0 --port 8000 --reload

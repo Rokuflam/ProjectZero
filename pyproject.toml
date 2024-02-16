@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ProjectZero"
-version = "0.1.0"
+version = "1.0.0"
 description = "Django skeleton with most useful functionalities for new projects."
 authors = ["Roman <98953084+Rokuflam@users.noreply.github.com>"]
 readme = "README.md"
@@ -10,7 +10,6 @@ Django = "^5.0"
 djangorestframework = "^3.14"
 djangorestframework-simplejwt = "^5.3"
 drf-spectacular = "^0.27"
-gunicorn = "^21.2"
 uvicorn = "^0.27"
 pillow = "^10.2"
 psycopg2-binary = "^2.9"
