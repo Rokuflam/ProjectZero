@@ -1,19 +1,28 @@
 """
-Django command to wait for the database to be available.
+Django management command to wait for the database to be available.
+
+This command routinely checks for the availability of the database. If the database is not available,
+the command pauses for 1 second before checking again.
 """
+
 import time
 
-from psycopg2 import OperationalError as Psycopg2Error
-
-from django.db.utils import OperationalError
 from django.core.management.base import BaseCommand
+from django.db.utils import OperationalError
+from psycopg2 import OperationalError as Psycopg2Error
 
 
 class Command(BaseCommand):
-    """Django command to wait for database."""
+    """Django command to pause execution until the database is available."""
 
     def handle(self, *args, **options):
-        """Entrypoint for command."""
+        """
+        Entry point for the command.
+
+        This method repeatedly tries to establish a connection with the default database.
+        If a connection attempt fails, the command waits for 1 second before trying again.
+        This process is repeated until a connection with the database is successfully established.
+        """
         self.stdout.write('Waiting for database...')
         db_up = False
         while db_up is False:

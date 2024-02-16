@@ -15,7 +15,6 @@ Classes:
 """
 
 # Django Standard Library Imports
-from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import transaction
 
@@ -25,37 +24,42 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 # Local modules import
+from apps.core.utils import get_tokens_for_user
 from .exceptions import UserAlreadyExistsException
 from .serializers import UserSerializer
-from apps.core.utils import get_tokens_for_user
 
 
 class CreateUserView(generics.CreateAPIView):
-    """API view to create a new user in the system."""
+    """
+
+    CreateUserView
+
+        This class is a view for creating new users upon receiving a POST request.
+
+    Attributes:
+        serializer_class (class): The class used for serializing the user data.
+
+    Methods:
+        create(self, request, *args, **kwargs)
+        user_exists(user_model, username)
+        get_user_tokens(user_model, user_id)
+
+    """
     serializer_class = UserSerializer
 
     def create(self, request, *args, **kwargs):
         """
         Creates a new user upon POST request.
-
-        Args:
-            request (rest_framework.request.Request): The request object.
-            *args: Variable length argument list.
-            **kwargs: Arbitrary keyword arguments.
-
-        Returns:
-            rest_framework.response.Response: Response with token details if the user creation is successful.
         """
-        # Validate and transform input data
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        # Check if the user already exists
-        User = get_user_model()
-        if User.objects.filter(username=request.data.get('username')).exists():
+        email = request.data.get('email')
+        user_model = get_user_model()
+
+        if self.user_exists(user_model, email):
             raise UserAlreadyExistsException("User already exists.")
 
-            # Perform the creation operation in a database transaction
         try:
             with transaction.atomic():
                 self.perform_create(serializer)
@@ -65,19 +69,35 @@ class CreateUserView(generics.CreateAPIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
-        # Fetch user and generate tokens
         headers = self.get_success_headers(serializer.data)
-        user = User.objects.get(pk=serializer.data['id'])
+        tokens = self.get_user_tokens(user_model, serializer.data['id'])
 
         return Response(
-            get_tokens_for_user(user),
+            tokens,
             status=status.HTTP_201_CREATED,
             headers=headers
         )
 
+    @staticmethod
+    def user_exists(user_model, email):
+        """
+        Check if a user with the given email exists in the user model.
+        """
+        return user_model.objects.filter(email=email).exists()
+
+    @staticmethod
+    def get_user_tokens(user_model, user_id):
+        """
+        Static method to retrieve tokens for a given user.
+        """
+        user = user_model.objects.get(pk=user_id)
+        return get_tokens_for_user(user)
+
 
 class ManageUserView(generics.RetrieveUpdateAPIView):
-    """API view to manage the authenticated user."""
+    """
+    A class representing the view for managing user information.
+    """
     serializer_class = UserSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]

@@ -1,5 +1,5 @@
 """
-Test for the Django user models admin modifications.
+This module contains test cases for the Django user models' admin modifications.
 """
 from django.test import TestCase, Client
 from django.contrib.auth import get_user_model

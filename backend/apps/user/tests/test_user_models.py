@@ -7,12 +7,26 @@ from django.contrib.auth import get_user_model
 
 
 def create_user(email='user@example.com', password='Testpass123?'):
-    """Create and return a new user."""
+    """
+    Create a new user with the given email and password.
+
+    Parameters:
+        email (str): The email address of the user. (default is 'user@example.com')
+        password (str): The password for the user. (default is 'Testpass123?')
+
+    Returns:
+        User: The newly created user object.
+
+    Example:
+        create_user(email='john@example.com', password='SecurePassword123!')
+    """
     return get_user_model().objects.create_user(email, password)
 
 
 class ModelTests(TestCase):
-    """Test models."""
+    """
+    ModelTests is a class that contains test cases for the model functionality.
+    """
 
     def test_create_user_with_email_successful(self):
         """Test creating a user with an email is successful"""

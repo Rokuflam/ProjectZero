@@ -1,5 +1,5 @@
 """
-Tests for the user API.
+This is a test module for testing the user model's admin interface modifications in Django.
 """
 from django.test import TestCase
 from django.contrib.auth import get_user_model

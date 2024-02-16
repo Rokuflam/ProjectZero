@@ -1,3 +1,23 @@
+"""
+This module defines URL routes for the Django application.
+
+The URL routes are defined with the Django's `path()` function and they are
+gathered in the `urlpatterns` list.
+
+Django uses this list to find a match with the current URL and then calls
+the associated view function.
+
+The module includes URLs for:
+- Django admin (`admin/`)
+- User API routes (`api/user/`). The actual routes are defined in 'apps.user.urls' module.
+
+In debug mode (when `settings.DEBUG` is `True`), the module also serves static and media files.
+
+If `settings.SHOW_DOCS` is `True`, this module also adds routes for serving API schema (`api/schema/`)
+and API docs (`api/docs/`).
+
+API schema and documentation are served using Django REST framework Spectacular views.
+"""
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings

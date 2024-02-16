@@ -13,4 +13,4 @@ python manage.py migrate --settings="$DJANGO_SETTINGS_MODULE"
 python manage.py loaddata --settings="$DJANGO_SETTINGS_MODULE" user
 
 # Run Gunicorn with the specified DJANGO_SETTINGS_MODULE
-exec gunicorn --env DJANGO_SETTINGS_MODULE="$DJANGO_SETTINGS_MODULE" config.wsgi:application -b 0.0.0.0:8000 --reload
+exec gunicorn config.asgi:application -k uvicorn.workers.UvicornWorker -b 0.0.0.0:8000 --env DJANGO_SETTINGS_MODULE="$DJANGO_SETTINGS_MODULE"

@@ -15,7 +15,18 @@ from apps.core.db import ConcatOp
 
 
 class CustomUserManager(UserManager):
-    """Manager for users."""
+    """A custom user manager class that extends the base UserManager class.
+
+    This class provides methods to create and save new users, as well as create
+    superusers.
+
+    Attributes:
+        None
+
+    Methods:
+        create_user(email, password=None, **kwargs): Create, save, and return a new user.
+        create_superuser(email, password, **kwargs): Create and return a new superuser.
+    """
 
     def create_user(self, email, password=None, **kwargs):
         """Create, save and return a new user."""
@@ -43,7 +54,34 @@ class CustomUserManager(UserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    """User in the system."""
+    """
+    This class represents a User in the application.
+
+    Attributes:
+        id (UUIDField): The unique identifier for the user.
+        email (EmailField): The email address of the user.
+        username (CharField): The username of the user.
+        avatar (ImageField): The avatar image of the user.
+        first_name (CharField): The first name of the user.
+        last_name (CharField): The last name of the user.
+        full_name (GeneratedField): The generated field for the full name of the user.
+        is_active (BooleanField): Indicates whether the user is active or not.
+        is_staff (BooleanField): Indicates whether the user is a staff member or not.
+        role (CharField): The role of the user.
+        date_joined (DateField): The date when the user joined the application.
+        objects (CustomUserManager): The manager for the User model.
+
+    Methods:
+        __str__(): Returns a string representation of the user object.
+
+    Meta:
+        This class also defines metadata options for the User model.
+
+        Attributes:
+            indexes (list): A list of database indexes.
+            verbose_name (str): A human-readable name for the model in singular form.
+            verbose_name_plural (str): A human-readable name for the model in plural form.
+    """
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(max_length=255, unique=True, db_index=True)
     username = models.CharField(max_length=30, null=True, blank=True)

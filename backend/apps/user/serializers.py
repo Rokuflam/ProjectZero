@@ -7,7 +7,29 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
-    """Serializer for the user object."""
+    """
+    Class: UserSerializer
+
+    The UserSerializer class is used for serializing and deserializing user data.
+     It is a subclass of the ModelSerializer class provided by the Django REST Framework.
+
+    Attributes:
+    - model (Model): The Django model associated with this serializer.
+    - fields (list): A list of fields to include in the serialized representation.
+    - extra_kwargs (dict): Additional keyword arguments for customizing field behavior.
+
+    Methods:
+    - create(self, validated_data): Creates and returns a user with encrypted password.
+    - update(self, instance, validated_data): Updates and returns a user.
+
+    Example usage:
+
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.create(validated_data=serializer.validated_data)
+            # do something with the user object
+
+    """
 
     class Meta:
         """
@@ -40,7 +62,30 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
-    """Serializer for the obtaining token"""
+    """
+
+    CustomTokenObtainPairSerializer class extends the TokenObtainPairSerializer class.
+
+    This class is used for validating the attributes passed to the serializer's validate() method.
+     It adds custom data to the response data.
+
+    Methods:
+    - validate(attrs): This method is called when the serializer
+     is validating the provided attributes. It first calls the validate() method
+      of the parent class (TokenObtainPairSerializer
+    *) to get the default result (access/refresh tokens).
+     Then, it adds custom data to the response data and returns it.
+
+    Example usage:
+    serializer = CustomTokenObtainPairSerializer(data=request.data)
+    if serializer.is_valid():
+        response = serializer.validated_data
+        # Do something with the response data
+
+    Note: To include custom data in the response, uncomment the line
+    'data.update({'id': self.user.id})' and add any additional data you want to include.
+
+    """
     def validate(self, attrs):
         # The default result (access/refresh tokens)
         data = super().validate(attrs)

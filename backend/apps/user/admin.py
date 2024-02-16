@@ -9,7 +9,25 @@ from django.contrib.auth import get_user_model
 
 
 class UserAdmin(BaseUserAdmin):
-    """Define the admin pages for users."""
+    """
+
+    This class represents the UserAdmin with extended functionality
+     for managing user accounts in the application.
+
+    Attributes:
+        ordering (list): A list of fields to specify the default ordering of user records.
+        list_display (list): A list of fields to be displayed in the user list view.
+        fieldsets (tuple): A tuple of fieldset sections for organizing fields in the user detail view.
+        readonly_fields (list): A list of fields that are read-only in the user detail view.
+        add_fieldsets (tuple): A tuple of fieldset sections for organizing fields in the user creation view.
+
+    Example Usage:
+        user_admin = UserAdmin()
+
+    Note:
+        This class extends the BaseUserAdmin class.
+
+    """
     ordering = ['id']
     list_display = ['email', 'full_name', 'last_login']
     fieldsets = (
