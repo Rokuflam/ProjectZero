@@ -73,6 +73,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # External modules
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
     'rest_framework',
     'rest_framework_simplejwt',
     'drf_spectacular',
@@ -92,6 +97,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'whitenoise.middleware.WhiteNoiseMiddleware',
+
+    # Add the account middleware:
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -135,6 +143,9 @@ DATABASES = {
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
 )
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -152,6 +163,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# django-allauth settings
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+SITE_ID = 1
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/

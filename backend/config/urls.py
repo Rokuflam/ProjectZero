@@ -19,13 +19,14 @@ and API docs (`api/docs/`).
 API schema and documentation are served using Django REST framework Spectacular views.
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/user/', include('apps.user.urls')),
+    path('api/accounts/', include('allauth.urls')),
 ]
 
 if settings.DEBUG:
