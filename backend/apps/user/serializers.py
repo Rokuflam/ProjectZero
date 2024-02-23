@@ -94,3 +94,8 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         # data.update({'id': self.user.id})
         # and everything else you want to send in the response
         return data
+
+
+# Schemas serializers
+class TokenSerializer(serializers.Serializer):
+    token = serializers.CharField(required=True, help_text="Authentication token")

@@ -8,7 +8,7 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView
 )
 from apps.user import views
-from .auth_views import google_login, facebook_login
+from .auth_views import FaceBookLoginView, GoogleLoginView
 app_name = 'user'  # pylint: disable=invalid-name
 
 urlpatterns = [
@@ -17,6 +17,6 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
     path('me/', views.ManageUserView.as_view(), name='me'),
-path('social/google/', google_login, name='google_login'),
-    path('social/facebook/', facebook_login, name='facebook_login'),
+    path('social/google/', GoogleLoginView.as_view(), name='google_login'),
+    path('social/facebook/', FaceBookLoginView.as_view(), name='facebook_login'),
 ]
