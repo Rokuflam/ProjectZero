@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "django.contrib.sites",
 
     # External modules
     'allauth',
@@ -167,8 +168,23 @@ AUTH_PASSWORD_VALIDATORS = [
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
-SITE_ID = 1
+SITE_ID = 1  # new
 
+ACCOUNT_EMAIL_VERIFICATION = "none"  # new
+
+LOGIN_REDIRECT_URL = "/"  # new
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+        'OAUTH_PKCE_ENABLED': True,
+    }
+}
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
