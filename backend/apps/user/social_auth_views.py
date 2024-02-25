@@ -28,45 +28,43 @@ User = get_user_model()
 # TODO: Linting, Fixtures for social appliacations + sites
 
 
-def fetch_user_info_from_google(token):
-    """
-    Fetches user information from Google using the provided token.
-    """
-    google_user_info_url = "https://www.googleapis.com/oauth2/v3/userinfo"
-    headers = {"Authorization": f"Bearer {token}"}
-    response = requests.get(google_user_info_url, headers=headers, timeout=10)
+class UserInfoFetcher:
+    def fetch_user_info(self, token: str, user_info_url: str, headers: dict = None, params: dict = None) -> dict:
+        response = requests.get(user_info_url, headers=headers, params=params, timeout=10)
 
-    if response.status_code == 200:
-        response = response.json()
+        if response.status_code != 200:
+            self.handle_error(response)
+
+        return response.json()
+
+    def handle_error(self, response):
+        raise Exception(f"Failed to fetch user info. Status code: {response.status_code}, Response: {response.text}")
+
+
+class GoogleUserInfoFetcher(UserInfoFetcher):
+    def fetch_user_info(self, token: str):
+        google_user_info_url = "https://www.googleapis.com/oauth2/v3/userinfo"
+        headers = {
+            "Authorization": f"Bearer {token}"
+        }
+        response = super().fetch_user_info(token, google_user_info_url, headers)
         key_mapping = {'sub': 'id', 'given_name': 'first_name', 'family_name': 'last_name', 'email': 'email'}
-
         new_dict = {}
         for k, v in response.items():
             # Replace the key if it's in the mapping, otherwise keep the original key
             new_key = key_mapping.get(k, k)
             new_dict[new_key] = v
-        return new_dict  # Return the user information as a dictionary
-    # Handle error responses appropriately
-    raise Exception(f"Failed to fetch user info from Google."
-                    f" Status code: {response.status_code}, Response: {response.text}")
+        return new_dict
 
 
-def fetch_user_info_from_facebook(token):
-    """
-    Fetches user information from Facebook using the provided access token.
-    """
-    facebook_user_info_url = "https://graph.facebook.com/v9.0/me"
-    params = {
-        "fields": "id,name,first_name,last_name,email",
-        "access_token": token,
-    }
-    response = requests.get(facebook_user_info_url, params=params, timeout=10)
-
-    if response.status_code == 200:
-        return response.json()  # Return the user information as a dictionary
-    # Handle error responses appropriately
-    raise Exception(f"Failed to fetch user info from Facebook."
-                    f" Status code: {response.status_code}, Response: {response.text}")
+class FacebookUserInfoFetcher(UserInfoFetcher):
+    def fetch_user_info(self, token: str):
+        facebook_user_info_url = "https://graph.facebook.com/v9.0/me"
+        params = {
+            "fields": "id,name,first_name,last_name,email",
+            "access_token": token,
+        }
+        return super().fetch_user_info(token, facebook_user_info_url, params=params)
 
 
 class SocialLoginView(APIView):
@@ -99,7 +97,7 @@ class SocialLoginView(APIView):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.provider = 'test'
-        self.fetch_user_info = fetch_user_info_from_google
+        self.fetcher = GoogleUserInfoFetcher()
 
     @extend_schema(
         request=TokenSerializer,  # Specify the custom serializer for the request body
@@ -151,7 +149,7 @@ class SocialLoginView(APIView):
         """
         try:
             app = SocialApp.objects.get(provider=provider)
-            user_info = self.fetch_user_info(token)  # Make sure this function correctly fetches user info
+            user_info = self.fetcher.fetch_user_info(token)  # Make sure this function correctly fetches user info
             user, _ = get_user_model().objects.get_or_create(email=user_info['email'], defaults={
                 'username': user_info['email'],
                 'first_name': user_info['first_name'],
@@ -199,7 +197,7 @@ class GoogleLoginView(SocialLoginView):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.provider = 'google'
-        self.fetch_user_info = fetch_user_info_from_google
+        self.fetcher = GoogleUserInfoFetcher()
 
 
 class FaceBookLoginView(SocialLoginView):
@@ -221,4 +219,4 @@ class FaceBookLoginView(SocialLoginView):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.provider = 'facebook'
-        self.fetch_user_info = fetch_user_info_from_facebook
+        self.fetcher = FacebookUserInfoFetcher()
