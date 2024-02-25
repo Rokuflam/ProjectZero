@@ -98,4 +98,10 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 # Schemas serializers
 class TokenSerializer(serializers.Serializer):
+    """
+    Class for serializing authentication tokens.
+
+    Attributes:
+        token (serializers.CharField): Required field representing the authentication token.
+    """
     token = serializers.CharField(required=True, help_text="Authentication token")
