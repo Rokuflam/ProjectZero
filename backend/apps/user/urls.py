@@ -8,7 +8,7 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView
 )
 from apps.user import views
-from .auth_views import FaceBookLoginView, GoogleLoginView
+from .social_auth_views import FaceBookLoginView, GoogleLoginView
 app_name = 'user'  # pylint: disable=invalid-name
 
 urlpatterns = [
