@@ -18,6 +18,7 @@ A DRF project to start new projects faster and better.
 - Django 5.0+
 - Django REST Framework for building APIs
 - User authentication and authorization
+- Social authentication
 - Token-based authentication
 - Serialization of models
 - CRUD operations
@@ -74,6 +75,8 @@ Make sure you have the following installed on your machine:
 
 1. Create a copy of the `.env.example` file and name it `.env`. Update the values as needed.
 
+2. If you need a Social Auth, go to `backend/apps/user/fixtures/social-auth.json`,
+and change client_id for the app you are about to use.
 
 ## Usage
 - Run the development server:

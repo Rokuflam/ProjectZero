@@ -10,7 +10,7 @@ python manage.py wait_for_db --settings="$DJANGO_SETTINGS_MODULE"
 python manage.py makemigrations --settings="$DJANGO_SETTINGS_MODULE" --no-input
 python manage.py collectstatic --settings="$DJANGO_SETTINGS_MODULE" --no-input
 python manage.py migrate --settings="$DJANGO_SETTINGS_MODULE"
-python manage.py loaddata --settings="$DJANGO_SETTINGS_MODULE" user
+python manage.py loaddata --settings="$DJANGO_SETTINGS_MODULE" user social-auth
 
 # Run Uvicorn with the specified DJANGO_SETTINGS_MODULE
 export DJANGO_SETTINGS_MODULE="$DJANGO_SETTINGS_MODULE"

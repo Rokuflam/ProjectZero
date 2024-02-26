@@ -12,14 +12,13 @@ COPY pyproject.toml .
 COPY poetry.lock .
 EXPOSE 8000
 
-RUN python -m venv /py && \
-    /py/bin/pip install --upgrade pip && \
+RUN pip install --upgrade pip && \
     apk add --update --no-cache postgresql-client jpeg-dev && \
     apk add --update --no-cache --virtual .tmp-build-deps \
         build-base postgresql-dev musl-dev zlib zlib-dev linux-headers && \
-    /py/bin/pip install poetry pylint && \
-    /py/bin/poetry config virtualenvs.create false && \
-    /py/bin/poetry install --no-dev && \
+    pip install poetry pylint && \
+    poetry config virtualenvs.create false && \
+    poetry install --no-dev && \
     rm -rf /tmp && \
     apk del .tmp-build-deps && \
     adduser \

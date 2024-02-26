@@ -1,0 +1,36 @@
+[
+  {
+    "model": "sites.site",
+    "pk": 1,
+    "fields": {
+      "domain": "127.0.0.1",
+      "name": "example.com"
+    }
+  },
+  {
+    "model": "socialaccount.socialapp",
+    "pk": 1,
+    "fields": {
+      "provider": "google",
+      "provider_id": "",
+      "name": "Google",
+      "client_id": "change_me",
+      "secret": "",
+      "key": "",
+      "settings": {},
+      "sites": [1]}
+  },
+  {
+    "model": "socialaccount.socialapp",
+    "pk": 2,
+    "fields": {
+      "provider": "facebook",
+      "provider_id": "",
+      "name": "Facebook",
+      "client_id": "change_me",
+      "secret": "",
+      "key": "",
+      "settings": {},
+      "sites": [1]}
+  }
+]
