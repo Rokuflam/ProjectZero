@@ -22,6 +22,7 @@ jobs:
       run: |
         pylint --version
         python --version
+        cd backend
         cat .pylintrc
         find apps -name '*.py'
     - name: Analysing the code with pylint
