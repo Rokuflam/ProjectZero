@@ -20,4 +20,4 @@ jobs:
         pip install pylint
     - name: Analysing the code with pylint
       run: |
-        pylint --rcfile=$(find .pylintrc) $(find apps)
+        cd backend && pylint --rcfile=$(find .pylintrc) $(find apps)
