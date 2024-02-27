@@ -87,6 +87,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
     """
     def validate(self, attrs):
+        """validate the attributes passed to the serializer"""
         # The default result (access/refresh tokens)
         data = super().validate(attrs)
 
