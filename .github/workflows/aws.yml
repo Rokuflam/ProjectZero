@@ -27,11 +27,11 @@
 name: Deploy to Amazon ECS
 
 on:
-    workflow_run:
-        workflows: ['Pylint']
-        types: [completed]
-        branches:
-            - 'github-workflow'
+  workflow_run:
+    workflows: ["CI build"]
+    types:
+      - completed
+    branches: ["github-actions"]
 
 env:
   AWS_REGION: MY_AWS_REGION                   # set this to your preferred AWS region, e.g. us-west-1
