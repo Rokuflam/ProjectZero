@@ -20,4 +20,4 @@ jobs:
         pip install pylint
     - name: Analysing the code with pylint
       run: |
-        pylint --rcfile=$GITHUB_WORKSPACE/backend/.pylintrc $(find backend/apps)
+        pylint --rcfile=$GITHUB_WORKSPACE/backend/pylintrc $(find backend/apps)
