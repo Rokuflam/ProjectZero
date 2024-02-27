@@ -19,7 +19,7 @@ sentry-sdk = {version = "^1.40", extras = ["django"]}
 whitenoise = "^6.6"
 
 [tool.poetry.dev-dependencies]
-pylint = "^3.0"
+pylint = "^3.1"
 
 [build-system]
 requires = ["poetry-core"]
