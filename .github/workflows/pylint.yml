@@ -21,4 +21,4 @@ jobs:
     - name: Analysing the code with pylint
       run: |
         cd backend
-        python -m pylint apps --rcfile=.pylintrc
+        python -m pylint apps
