@@ -27,4 +27,4 @@ jobs:
         find apps -name '*.py'
     - name: Analysing the code with pylint
       run: |
-        cd backend && pylint --rcfile=.pylintrc $(find apps -name '*.py')
+        cd backend && pylint --rcfile=.pylintrc .\apps
