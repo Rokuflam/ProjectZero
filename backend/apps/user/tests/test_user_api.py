@@ -9,6 +9,7 @@ from rest_framework.test import APIClient
 from rest_framework import status
 
 from apps.core.utils import get_tokens_for_user
+# pylint: disable=invalid-name
 
 CREATE_USER_URL = reverse('user:create')
 TOKEN_OBTAIN_URL = reverse('user:token_obtain_pair')

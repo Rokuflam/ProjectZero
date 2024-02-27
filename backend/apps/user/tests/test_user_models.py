@@ -4,6 +4,7 @@ Tests for user models.
 
 from django.test import TestCase
 from django.contrib.auth import get_user_model
+# pylint: disable=invalid-name
 
 
 def create_user(email='user@example.com', password='Testpass123?'):

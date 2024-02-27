@@ -15,7 +15,7 @@ from psycopg2 import OperationalError as Psycopg2Error
 class Command(BaseCommand):
     """Django command to pause execution until the database is available."""
 
-    def handle(self, *args, **options):
+    def handle(self, *args, **options):  # pylint: disable=unused-argument
         """
         Entry point for the command.
 

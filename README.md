@@ -91,7 +91,7 @@ and change client_id for the app you are about to use.
 
 - Pylint check
     ```bash
-    docker-compose -f docker/docker-compose-local.yml run --rm app sh -c "pylint .\apps\ --rcfile=.pylintrc"
+    docker-compose -f docker/docker-compose-local.yml run --rm app sh -c "pylint apps --rcfile=.pylintrc"
     ```
 
 ## API Documentation
