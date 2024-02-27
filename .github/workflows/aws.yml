@@ -28,7 +28,7 @@ name: Deploy to Amazon ECS
 
 on:
     workflow_run:
-        workflows: ['Validate']
+        workflows: ['Pylint']
         types: [completed]
         branches:
             - 'github-workflow'
