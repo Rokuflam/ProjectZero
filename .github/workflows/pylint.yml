@@ -17,9 +17,8 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install poetry
-        poetry install --dev
+        pip install pylint
     - name: Analysing the code with pylint
       run: |
         cd backend
-        pylint --rcfile=.pylintrc $(find apps)
+        python -m pylint $(find apps) --rcfile=.pylintrc
