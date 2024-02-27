@@ -29,7 +29,8 @@ name: Deploy to Amazon ECS
 on:
   workflow_run:
     workflows: ["Pylint"]
-    types: ["completed"]
+    types:
+      - completed
 
 env:
   AWS_REGION: MY_AWS_REGION                   # set this to your preferred AWS region, e.g. us-west-1
