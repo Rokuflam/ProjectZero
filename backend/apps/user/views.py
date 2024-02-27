@@ -47,7 +47,7 @@ class CreateUserView(generics.CreateAPIView):
     """
     serializer_class = UserSerializer
 
-    def create(self, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs):  # pylint: disable=unused-argument
         """
         Creates a new user upon POST request.
         """

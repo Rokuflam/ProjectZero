@@ -27,6 +27,7 @@ class PublicUserApiTests(TestCase):
     """Tests the public features of the user API."""
 
     def setUp(self):
+        """Set up test fixtures, if any."""
         self.client = APIClient()
 
     def test_create_user_success(self):
@@ -78,6 +79,7 @@ class TokenUserApiTests(TestCase):
     """Tests the jwt token features of the user API."""
 
     def setUp(self):
+        """Set up test fixtures, if any."""
         self.user_details = {
             'email': 'test@example.com',
             'password': 'test-user-password123'
@@ -166,6 +168,7 @@ class PrivateUserApiTests(TestCase):
     """Test API requirements that require authentication."""
 
     def setUp(self):
+        """Set up test fixtures, if any."""
         self.user_details = {
             'email': 'test@example.com',
             'password': 'test-user-password123',
