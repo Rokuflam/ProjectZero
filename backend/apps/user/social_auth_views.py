@@ -10,8 +10,7 @@ from django.http import HttpRequest
 from drf_spectacular.utils import extend_schema
 from rest_framework import status
 from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework_simplejwt.tokens import RefreshToken
+
 from allauth.socialaccount.helpers import complete_social_login
 from allauth.socialaccount.models import (
     SocialLogin,
@@ -21,8 +20,8 @@ from allauth.socialaccount.models import (
 )
 
 from .serializers import TokenSerializer
-# pylint: disable=broad-exception-raised
-
+from rest_framework.response import Response
+from rest_framework_simplejwt.tokens import RefreshToken
 User = get_user_model()
 
 
