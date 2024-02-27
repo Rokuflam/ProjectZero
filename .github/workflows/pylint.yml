@@ -17,7 +17,8 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pylint
+        pip install pylint 3.0
     - name: Analysing the code with pylint
       run: |
-        pylint --rcfile=$GITHUB_WORKSPACE/backend/pylintrc $(find backend/apps)
+        cd backend
+        pylint --rcfile=.pylintrc $(find apps)
