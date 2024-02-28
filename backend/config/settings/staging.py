@@ -37,3 +37,10 @@ if SENTRY_DSN:
         auto_session_tracking=True
     )
     ignore_logger("django.security.DisallowedHost")
+
+
+# settings to choose default email sender for anymail, choose one of the below or set up your in base.py
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"  # free to use, but usually counts as a spam
+# EMAIL_BACKEND = "anymail.backends.sendgrid.EmailBackend"
+# EMAIL_BACKEND = "anymail.backends.amazon_ses.EmailBackend"
+# EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"

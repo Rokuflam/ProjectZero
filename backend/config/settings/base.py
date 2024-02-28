@@ -33,6 +33,10 @@ It contains configurations and settings used by the Django project. These includ
 - ADMIN_SITE_TITLE: Title for the admin pages.
 - ADMIN_INDEX_TITLE: Title for the admin index page.
 - ADMIN_SITE_URL: The URL for the administrative site.
+- SMTP_EMAIL_HOST: The host of the SMTP server. The default value set here is 'smtp.gmail.com'.
+- SMTP_EMAIL_HOST_USER: The user of the SMTP server. You can replace 'your-email@gmail.com' with your actual email account within the gmail hosting.
+- SMTP_EMAIL_HOST_PASSWORD: The password value associated with the above user of the SMTP server. Replace 'your-password' with your actual account password.
+- ANYMAIL: This dictionary includes the settings for different mail providers.
 
 Remember to never expose sensitive information such as your secret key or any database credentials.
 """
@@ -79,9 +83,12 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
+
     'rest_framework',
     'rest_framework_simplejwt',
     'drf_spectacular',
+
+    'anymail'
 
     # Internal modules
     'apps.core.apps.UserConfig',
@@ -218,7 +225,7 @@ SIMPLE_JWT = {
 SPECTACULAR_SETTINGS = {
     'TITLE': 'ProjectZero',
     'DESCRIPTION': 'Template to start any project on Django/DRF',
-    'VERSION': '1.0.0',
+    'VERSION': '1.1.0',
     'COMPONENT_SPLIT_REQUEST': True,
     'SERVE_INCLUDE_SCHEMA': False,
 }
@@ -229,3 +236,28 @@ ADMIN_SITE_HEADER = os.environ.get('ADMIN_SITE_HEADER', 'ProjectZero')
 ADMIN_SITE_TITLE = os.environ.get('ADMIN_SITE_TITLE', 'ProjectZero')
 ADMIN_INDEX_TITLE = os.environ.get('ADMIN_INDEX_TITLE', 'Welcome to ProjectZero Admin Panel')
 ADMIN_SITE_URL = os.environ.get('ADMIN_SITE_URL', 'http://localhost:8000/admin/')
+
+# Anymail settings, you can use all of them or just delete/forget which you won't use
+# To choose which env going to use which service, go to {your-env}.py, and select EMAIL_BACKEND from the list there.
+
+# SMTP settings
+EMAIL_HOST = os.environ.get('SMTP_EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = os.environ.get('SMTP_EMAIL_HOST_USER', 'your-email@gmail.com')
+EMAIL_HOST_PASSWORD = os.environ.get('SMTP_EMAIL_HOST_PASSWORD', 'your-password')
+
+ANYMAIL = {
+    # SendGrid settings
+    "SENDGRID_API_KEY": os.environ.get('SENDGRID_API_KEY', 'your-sendgrid-api-key'),
+    "SENDGRID_GENERATE_MESSAGE_ID": os.environ.get('SENDGRID_GENERATE_MESSAGE_ID', True),
+
+    # Amazon SES settings
+    "SES_ACCESS_KEY_ID": os.environ.get('SES_ACCESS_KEY_ID', 'your-aws-access-key-id'),
+    "SES_SECRET_ACCESS_KEY": os.environ.get('SES_SECRET_ACCESS_KEY', 'your-aws-secret-access-key'),
+    "SES_REGION_NAME": os.environ.get('SES_REGION_NAME', 'your-aws-region'),
+
+    # Mailgun settings
+    "MAILGUN_API_KEY": os.environ.get('MAILGUN_API_KEY', 'your-mailgun-api-key'),
+    "MAILGUN_SENDER_DOMAIN": os.environ.get('MAILGUN_SENDER_DOMAIN', 'your-mailgun-domain.com'),
+}

@@ -2,7 +2,7 @@
 This is the development settings module of the Django application.
 
 The module imports base settings from `base.py` and uses environment variables for configuration.
-The `SENTRY_DSN` environment variable is used to provide the DSN for the Sentry service.
+- SENTRY_DSN: environment variable is used to provide the DSN for the Sentry service.
 
 If the `SENTRY_DSN` is present, the Sentry SDK is initialized with the following settings:
 - `dsn` is set to `SENTRY_DSN`.
@@ -14,6 +14,8 @@ If the `SENTRY_DSN` is present, the Sentry SDK is initialized with the following
 The SDK is also instructed to ignore log messages from `"django.security.DisallowedHost"`.
 
 Note: The actual values used might vary and should be retrieved from environment variables or a secure configuration mechanism.
+
+- ANYMAIL: settings for sending emails, change to your prefer service
 """
 
 from .base import *
@@ -37,3 +39,10 @@ if SENTRY_DSN:
         auto_session_tracking=True
     )
     ignore_logger("django.security.DisallowedHost")
+
+
+# settings to choose default email sender for anymail, choose one of the below or set up your in base.py
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"  # free to use, but usually counts as a spam
+# EMAIL_BACKEND = "anymail.backends.sendgrid.EmailBackend"
+# EMAIL_BACKEND = "anymail.backends.amazon_ses.EmailBackend"
+# EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
