@@ -15,7 +15,7 @@ The SDK is also instructed to ignore log messages from `"django.security.Disallo
 
 Note: The actual values used might vary and should be retrieved from environment variables or a secure configuration mechanism.
 
-- ANYMAIL: settings for sending emails, change to your prefer service
+- EMAIL_BACKEND: default sender for anymail
 """
 
 from .base import *

@@ -13,6 +13,8 @@ If the `SENTRY_DSN` is present, the Sentry SDK is initialized with the following
 
 The SDK is also instructed to ignore log messages from `"django.security.DisallowedHost"`.
 
+- EMAIL_BACKEND: default sender for anymail
+
 Note: The actual values used might vary and should be retrieved from environment variables or a secure configuration mechanism.
 """
 
