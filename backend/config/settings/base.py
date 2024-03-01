@@ -69,6 +69,7 @@ ALLOWED_HOSTS.extend(
 # Application definition
 
 INSTALLED_APPS = [
+    # Base modules
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -78,17 +79,24 @@ INSTALLED_APPS = [
     "django.contrib.sites",
 
     # External modules
+    # social auth
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
 
+    # drf
     'rest_framework',
+
+    # sign-up/in
     'rest_framework_simplejwt',
+
+    # openai docs/schema generator + swagger
     'drf_spectacular',
 
-    'anymail'
+    # email sender
+    'anymail',
 
     # Internal modules
     'apps.core.apps.UserConfig',

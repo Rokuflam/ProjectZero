@@ -25,6 +25,7 @@ A DRF project to start new projects faster and better.
 - Testing with `unittest`
 - Continuous Integration with GitHub Actions
 - Linting using Pylint
+- Sending email with Anymail
 
 ## Prerequisites
 
@@ -78,6 +79,9 @@ Make sure you have the following installed on your machine:
 2. If you need a Social Auth, go to `backend/apps/user/fixtures/social-auth.json`,
 and change client_id for the app you are about to use.
 
+3. If you need Anymail, fill variables from example.env into your env file,
+and choose `EMAIL_BACKEND` in `backend/config/settings/{env you use}.py`
+
 ## Usage
 - Run the development server:
     ```bash
@@ -107,3 +111,4 @@ and change client_id for the app you are about to use.
 - [Poetry](https://python-poetry.org/)
 - [Sentry](https://docs.sentry.io/)
 - [Pylint](https://pypi.org/project/pylint/)
+- [Anymail](https://anymail.dev/en/)
