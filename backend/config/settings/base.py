@@ -76,7 +76,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "django.contrib.sites",
+    'django.contrib.sites',
 
     # External modules
     # social auth
@@ -104,6 +104,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # Base
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -112,11 +113,20 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
+    # External
+    #
     'whitenoise.middleware.WhiteNoiseMiddleware',
 
     # Add the account middleware:
-    "allauth.account.middleware.AccountMiddleware",
+    'allauth.account.middleware.AccountMiddleware',
+
+    # Internal
+    # healthcheck
+    'apps.core.middleware.healthcheck.HealthCheckMiddleware'
 ]
+# additional healthcheck settings
+HEALTH_CHECK_URL = os.environ.get('HEALTH_CHECK_URL', '/health/')
+
 
 ROOT_URLCONF = 'config.urls'
 
@@ -223,10 +233,10 @@ REST_FRAMEWORK = {
 
 # Simple JWT/Token settings
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(hours=1),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 
-    "TOKEN_OBTAIN_SERIALIZER": "apps.user.serializers.CustomTokenObtainPairSerializer",
+    'TOKEN_OBTAIN_SERIALIZER': 'apps.user.serializers.CustomTokenObtainPairSerializer',
 }
 
 # drf-spectacular settings
@@ -257,15 +267,15 @@ EMAIL_HOST_PASSWORD = os.environ.get('SMTP_EMAIL_HOST_PASSWORD', 'your-password'
 
 ANYMAIL = {
     # SendGrid settings
-    "SENDGRID_API_KEY": os.environ.get('SENDGRID_API_KEY', 'your-sendgrid-api-key'),
-    "SENDGRID_GENERATE_MESSAGE_ID": os.environ.get('SENDGRID_GENERATE_MESSAGE_ID', True),
+    'SENDGRID_API_KEY': os.environ.get('SENDGRID_API_KEY', 'your-sendgrid-api-key'),
+    'SENDGRID_GENERATE_MESSAGE_ID': os.environ.get('SENDGRID_GENERATE_MESSAGE_ID', True),
 
     # Amazon SES settings
-    "SES_ACCESS_KEY_ID": os.environ.get('SES_ACCESS_KEY_ID', 'your-aws-access-key-id'),
-    "SES_SECRET_ACCESS_KEY": os.environ.get('SES_SECRET_ACCESS_KEY', 'your-aws-secret-access-key'),
-    "SES_REGION_NAME": os.environ.get('SES_REGION_NAME', 'your-aws-region'),
+    'SES_ACCESS_KEY_ID': os.environ.get('SES_ACCESS_KEY_ID', 'your-aws-access-key-id'),
+    'SES_SECRET_ACCESS_KEY': os.environ.get('SES_SECRET_ACCESS_KEY', 'your-aws-secret-access-key'),
+    'SES_REGION_NAME': os.environ.get('SES_REGION_NAME', 'your-aws-region'),
 
     # Mailgun settings
-    "MAILGUN_API_KEY": os.environ.get('MAILGUN_API_KEY', 'your-mailgun-api-key'),
-    "MAILGUN_SENDER_DOMAIN": os.environ.get('MAILGUN_SENDER_DOMAIN', 'your-mailgun-domain.com'),
+    'MAILGUN_API_KEY': os.environ.get('MAILGUN_API_KEY', 'your-mailgun-api-key'),
+    'MAILGUN_SENDER_DOMAIN': os.environ.get('MAILGUN_SENDER_DOMAIN', 'your-mailgun-domain.com'),
 }

@@ -26,6 +26,7 @@ A DRF project to start new projects faster and better.
 - Continuous Integration with GitHub Actions
 - Linting using Pylint
 - Sending email with Anymail
+- HealthCheckMiddleware
 
 ## Prerequisites
 
