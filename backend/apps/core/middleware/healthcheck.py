@@ -9,7 +9,7 @@ Classes:
 
 Usage:
     To use this middleware, add it to the MIDDLEWARE setting in your Django project's settings.py file.
-    Ensure that the health check endpoint ('/health/') is configured in your URLconf
+    Ensure that the health check endpoint ('/health/' by default) is configured in your URLconf
      if it is not handled by the middleware itself.
 """
 from django.conf import settings

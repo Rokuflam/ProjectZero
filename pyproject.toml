@@ -8,6 +8,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 Django = "^5.0"
 django-allauth = "^0.61"
+django-extensions = "^3.2"
 djangorestframework = "^3.14"
 djangorestframework-simplejwt = "^5.3"
 drf-spectacular = "^0.27"

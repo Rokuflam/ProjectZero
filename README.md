@@ -113,3 +113,4 @@ and choose `EMAIL_BACKEND` in `backend/config/settings/{env you use}.py`
 - [Sentry](https://docs.sentry.io/)
 - [Pylint](https://pypi.org/project/pylint/)
 - [Anymail](https://anymail.dev/en/)
+- [Django Extensions](https://pypi.org/project/django-extensions/)

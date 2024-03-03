@@ -98,6 +98,9 @@ INSTALLED_APPS = [
     # email sender
     'anymail',
 
+    # additional useful commands for django
+    'django_extensions',
+
     # Internal modules
     'apps.core.apps.UserConfig',
     'apps.user.apps.UserConfig',
