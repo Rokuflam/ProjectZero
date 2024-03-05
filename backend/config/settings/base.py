@@ -117,7 +117,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     # External
-    #
+    # for static files
     'whitenoise.middleware.WhiteNoiseMiddleware',
 
     # Add the account middleware:
@@ -125,7 +125,10 @@ MIDDLEWARE = [
 
     # Internal
     # healthcheck
-    'apps.core.middleware.healthcheck.HealthCheckMiddleware'
+    'apps.core.middleware.healthcheck.HealthCheckMiddleware',
+    
+    # sql_profiler
+    'apps.core.middleware.sql_profiler.SQLProfilerMiddleware',
 ]
 # additional healthcheck settings
 HEALTH_CHECK_URL = os.environ.get('HEALTH_CHECK_URL', '/health/')
@@ -164,7 +167,6 @@ DATABASES = {
         'PASSWORD': os.environ.get('DB_PASS'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators

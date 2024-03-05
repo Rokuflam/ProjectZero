@@ -13,9 +13,10 @@ If the `SENTRY_DSN` is present, the Sentry SDK is initialized with the following
 
 The SDK is also instructed to ignore log messages from `"django.security.DisallowedHost"`.
 
-Note: The actual values used might vary and should be retrieved from environment variables or a secure configuration mechanism.
-
 - EMAIL_BACKEND: default sender for anymail
+- DEBUG_SQL: sql profiler setting: {0: 'disabled', 1: 'enabled'}
+
+Note: The actual values used might vary and should be retrieved from environment variables or a secure configuration mechanism.
 """
 
 from .base import *
@@ -46,3 +47,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # free to use, bu
 # EMAIL_BACKEND = 'anymail.backends.sendgrid.EmailBackend'
 # EMAIL_BACKEND = 'anymail.backends.amazon_ses.EmailBackend'
 # EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
+
+# sql profiler setting: {0: 'disabled', 1: 'enabled'}
+DEBUG_SQL = bool(int(os.environ.get('DEBUG_SQL', 0)))

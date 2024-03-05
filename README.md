@@ -27,6 +27,7 @@ A DRF project to start new projects faster and better.
 - Linting using Pylint
 - Sending email with Anymail
 - HealthCheckMiddleware
+- SQLProfilerMiddleware
 
 ## Prerequisites
 
