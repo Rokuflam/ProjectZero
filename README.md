@@ -11,6 +11,7 @@ A DRF project to start new projects faster and better.
 - [Configuration](#configuration)
 - [Usage](#usage)
 - [API Documentation](#api-documentation)
+- [Terraform Setup](#terraform-setup)
 - [Acknowledgments](#acknowledgments)
 
 ## Features
@@ -60,7 +61,7 @@ Make sure you have the following installed on your machine:
     ```
 
 4. Generate Poetry lock file
- 
+
    ```bash
     poetry lock
    ```
@@ -105,6 +106,101 @@ and choose `EMAIL_BACKEND` in `backend/config/settings/{env you use}.py`
 1.   [Swagger](http://localhost:8000/api/docs/) /api/docs/
 2.   [Admin panel](http://localhost:8000/admin/) /admin/
 
+## Terraform Setup
+
+Terraform is used to manage and provision your cloud infrastructure. Here are the steps to set up a free-tier EC2 instance for dev-env:
+
+### Prerequisites
+
+- Terraform installed on your machine. [Download Terraform](https://www.terraform.io/downloads.html)
+
+AWS only:
+- AWS CLI installed and configured with your AWS credentials.
+- Create an IAM user with next permissions:
+
+```bash
+{
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Effect": "Allow",
+			"Action": [
+				"ec2:CreateSecurityGroup",
+				"ec2:DeleteSecurityGroup",
+				"ec2:DescribeSecurityGroups",
+				"ec2:AuthorizeSecurityGroupIngress",
+				"ec2:RevokeSecurityGroupIngress",
+				"ec2:RevokeSecurityGroupEgress",
+				"ec2:AuthorizeSecurityGroupEgress",
+				"ec2:CreateKeyPair",
+				"ec2:RunInstances",
+				"ec2:DescribeInstances",
+				"ec2:TerminateInstances",
+				"ec2:CreateTags",
+				"ec2:DeleteTags",
+				"ec2:DescribeInstanceTypes",
+				"ec2:DescribeTags",
+				"ec2:DescribeInstanceAttribute",
+				"ec2:DescribeVolumes",
+				"ec2:DescribeNetworkInterfaces",
+				"ec2:DescribeInstanceCreditSpecifications"
+			],
+			"Resource": "*"
+		}
+	]
+}
+```
+
+
+### Configuration
+
+
+1. Open Terminal and go to terraform\dev:
+
+    ```bash
+    cd .\terraform\dev\
+    ```
+
+2. Create a `terraform.tfvars` file to provide the actual values for the variables:
+
+    ```hcl
+    vpc_id       = "vpc-xxxxxxxx"            # Replace with your actual VPC ID
+    region       = "us-east-1"               # You can change this if needed
+    ami_id       = "ami-0c02fb55956c7d316"   # Replace with your actual AMI ID
+    instance_type = "t2.micro"               # Free tier instance type
+    ```
+
+
+3. Initialize Terraform:
+
+    ```bash
+    terraform init
+    ```
+
+4. Create an execution plan:
+
+    ```bash
+    terraform plan
+    ```
+
+5. Apply the configuration to create the resources:
+
+    ```bash
+    terraform apply
+    ```
+
+    Confirm the action by typing `yes` when prompted.
+
+### Destroying Resources
+
+To destroy the resources created by Terraform, run the following command:
+
+```bash
+terraform destroy
+```
+
+Confirm the action by typing `yes` when prompted.
+
 ## Acknowledgments
 
 - [Django](https://www.djangoproject.com/)
@@ -115,3 +211,4 @@ and choose `EMAIL_BACKEND` in `backend/config/settings/{env you use}.py`
 - [Pylint](https://pypi.org/project/pylint/)
 - [Anymail](https://anymail.dev/en/)
 - [Django Extensions](https://pypi.org/project/django-extensions/)
+- [Terraform](https://www.terraform.io/)
