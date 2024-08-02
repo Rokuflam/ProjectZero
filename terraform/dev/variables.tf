@@ -1,24 +1,46 @@
 # variables.tf
 
-variable "vpc_id" {
-  description = "The VPC ID where the security group will be created"
-  type        = string
+variable "aws_region" {
+  description = "The AWS region where the ECR repository is located"
+  default     = "us-east-1"
 }
 
-variable "region" {
-  description = "The AWS region to create resources in"
-  type        = string
-  default     = "us-east-1"  # Cheapest AWS region
+variable "vpc_id" {
+  description = "The ID of the VPC where the security group will be created"
 }
 
 variable "ami_id" {
   description = "The AMI ID for the EC2 instance"
-  type        = string
-  default     = "ami-0c02fb55956c7d316"  # Valid Amazon Linux 2 AMI ID for us-east-1
 }
 
 variable "instance_type" {
-  description = "The EC2 instance type"
-  type        = string
+  description = "The instance type for the EC2 instance"
   default     = "t2.micro"
+}
+
+variable "public_key_path" {
+  description = "The path to the public key for SSH access"
+}
+
+variable "private_key_path" {
+  description = "The path to the private key for SSH access"
+}
+
+variable "github_token" {
+  description = "The GitHub token for authentication"
+  type        = string
+  sensitive   = true
+}
+
+variable "github_owner" {
+  description = "The GitHub owner (user or organization)"
+}
+
+variable "github_repository" {
+  description = "The GitHub repository name"
+}
+
+variable "ecr_repository" {
+  description = "The name of the ECR repository"
+  default     = "app-repo"
 }

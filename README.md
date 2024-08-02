@@ -133,6 +133,7 @@ AWS only:
 				"ec2:RevokeSecurityGroupEgress",
 				"ec2:AuthorizeSecurityGroupEgress",
 				"ec2:CreateKeyPair",
+				"ec2:DeleteKeyPair",
 				"ec2:RunInstances",
 				"ec2:DescribeInstances",
 				"ec2:TerminateInstances",
@@ -143,7 +144,14 @@ AWS only:
 				"ec2:DescribeInstanceAttribute",
 				"ec2:DescribeVolumes",
 				"ec2:DescribeNetworkInterfaces",
-				"ec2:DescribeInstanceCreditSpecifications"
+				"ec2:DescribeInstanceCreditSpecifications",
+				"ec2:ImportKeyPair",
+				"ec2:DescribeKeyPairs",
+				"ecr:CreateRepository",
+				"ecr:DeleteRepository",
+				"ecr:DescribeRepositories",
+				"ecr:TagResource",
+				"ecr:ListTagsForResource"
 			],
 			"Resource": "*"
 		}
@@ -165,9 +173,24 @@ AWS only:
 
     ```hcl
     vpc_id       = "vpc-xxxxxxxx"            # Replace with your actual VPC ID
-    region       = "us-east-1"               # You can change this if needed
+    aws_region       = "us-east-1"           # You can change this if needed
     ami_id       = "ami-0c02fb55956c7d316"   # Replace with your actual AMI ID
     instance_type = "t2.micro"               # Free tier instance type
+    public_key_path = "replace-me "          # Ensure Windows path is properly escaped
+    private_key_path = "replace-me"          # Ensure Windows path is properly escaped
+    github_token    = "replace-me"           # user github token with next permissions:
+                                             #  1. **Actions**: Access Read and write
+                                             #  2. **Contents**: Access Read and write
+                                             #  3. **Deployments**: Access Read and write
+                                             #  4. **Environments**: Access Read-only
+                                             #  5. **Metadata**: Access Read-only
+                                             #  6. **Pull Requests**: Access Read-only
+                                             #  7. **Secrets**: Access Read and write
+                                             #  8. **Variables**: Access Read and write
+                                             #  9. **Workflows**: Access Read and write
+    github_owner    = "replace-me"           # username of github repository owner or just a user
+    github_repository = "replace-me"         # Just the repository name
+    ecr_repository  = "replace-me"           # Just the ECR repository name
     ```
 
 
