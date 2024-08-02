@@ -27,9 +27,6 @@ jobs:
 
       - name: Build, tag, and push image to ECR
         run: |
-          pwd
-          ls -l
-          ls -l docker/
           docker build -t steps.login-ecr.outputs.registry/secrets.ECR_REPOSITORY:github.sha -f docker/Dockerfile .
           docker push steps.login-ecr.outputs.registry/secrets.ECR_REPOSITORY:github.sha
         env:
