@@ -1,6 +1,10 @@
 # deploy.tpl
 name: Deploy to Development env
 
+on:
+  push:
+    branches:
+      - development
 
 jobs:
   build_and_deploy:
