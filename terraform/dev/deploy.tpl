@@ -4,7 +4,7 @@ name: Deploy to EC2
 on:
   push:
     branches:
-      - main
+      - development
 
 jobs:
   build_and_deploy:
