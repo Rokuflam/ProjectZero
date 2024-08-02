@@ -99,6 +99,7 @@ resource "github_actions_secret" "ecr_repository" {
 resource "github_repository_file" "workflow" {
   repository = var.github_repository
   file       = ".github/workflows/deploy.yml"
+  branch     = "development"  # Specify the target branch here
   content    = templatefile("${path.module}/deploy.tpl", {
     AWS_REGION      = var.aws_region,
     EC2_PRIVATE_KEY = file(var.private_key_path),
