@@ -24,13 +24,12 @@ jobs:
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
-      - name: Check current directory and list files
+
+      - name: Build, tag, and push image to ECR
         run: |
           pwd
           ls -l
           ls -l docker/
-      - name: Build, tag, and push image to ECR
-        run: |
           docker build -t steps.login-ecr.outputs.registry/secrets.ECR_REPOSITORY:github.sha -f docker/Dockerfile .
           docker push steps.login-ecr.outputs.registry/secrets.ECR_REPOSITORY:github.sha
         env:
