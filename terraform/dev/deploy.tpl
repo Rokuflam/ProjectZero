@@ -1,10 +1,12 @@
 # deploy.tpl
-name: Deploy to EC2
+name: Deploy to Development env
 
 on:
-  push:
-    branches:
-      - development
+  workflow_run:
+    workflows: ["Pylint"]
+    branches: ["development"]
+    types:
+      - completed
 
 jobs:
   build_and_deploy:
