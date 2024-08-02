@@ -2,25 +2,28 @@
 name: Deploy to Development env
 
 on:
-  workflow_run:
-    workflows: ["Pylint"]
-    branches: ["development"]
-    types:
-      - completed
+  push:
+    branches:
+      - development
 
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      - name: Log in to Amazon ECR
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: secrets.AWS_ACCESS_KEY_ID
+          aws-secret-access-key: secrets.AWS_SECRET_ACCESS_KEY
+          aws-region: secrets.AWS_REGION
+
+      - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
-        with:
-          region: secrets.AWS_REGION
 
       - name: Build, tag, and push image to ECR
         run: |
