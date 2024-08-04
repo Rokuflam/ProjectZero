@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          ref: development
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -49,15 +51,13 @@ jobs:
             export AWS_DEFAULT_REGION=${{ secrets.AWS_REGION }}
             aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ steps.login-ecr.outputs.registry }}
 
-            # Pull the latest Docker Compose file from the repo
-            git clone git@github.com:Rokuflam/ProjectZero.git
+            # Ensure we're in the correct directory and pull the latest changes
+            cd ProjectZero # Adjust path as necessary
+            git fetch
+            git checkout development
+            git pull
 
-            # Replace the image in docker-compose file with the latest image
-            sed -i 's|image:.*|image: ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPOSITORY }}:${{ github.sha }}|' docker/docker-compose-local.yml
-
-            # Pull the necessary images
+            # Run docker-compose from the development branch
             docker-compose -f docker/docker-compose-local.yml pull
-
-            # Up the services using docker-compose
             docker-compose -f docker/docker-compose-local.yml up -d
           EOF
