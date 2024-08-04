@@ -46,18 +46,21 @@ jobs:
       - name: Deploy to EC2
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_IP }} << 'EOF'
-            export AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}
-            export AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            export AWS_DEFAULT_REGION=${{ secrets.AWS_REGION }}
-            aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ steps.login-ecr.outputs.registry }}
+            # Install git if not already installed
+            sudo apt-get update && sudo apt-get install git -y
 
-            # Ensure we're in the correct directory and pull the latest changes
-            cd ProjectZero # Adjust path as necessary
-            git fetch
-            git checkout development
-            git pull
+            # Navigate to the project directory or clone if not present
+            cd /home/${{ secrets.EC2_USER }}/ || git clone https://github.com/your-username/ProjectZero.git /home/${{ secrets.EC2_USER }}/
+            cd /ProjectZerocd &&
+            git checkout development &&
+            git fetch origin development &&
 
-            # Run docker-compose from the development branch
-            docker-compose -f docker/docker-compose-local.yml pull
-            docker-compose -f docker/docker-compose-local.yml up -d
+            # Reset local changes to allow a clean pull
+            git reset --hard origin/development &&
+            git pull origin development &&
+
+            # Navigate to the Docker directory and run docker-compose
+            cd docker
+            docker-compose -f docker-compose-local.yml pull
+            docker-compose -f docker-compose-local.yml up -d
           EOF
