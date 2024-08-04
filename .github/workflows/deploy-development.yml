@@ -49,7 +49,5 @@ jobs:
             export AWS_DEFAULT_REGION=${{ secrets.AWS_REGION }}
             aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ steps.login-ecr.outputs.registry }}
             docker pull ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPOSITORY }}:${{ github.sha }}
-            cd /path/to/your/app
-            docker-compose down
-            docker-compose up -d --build
+            ls
           EOF
