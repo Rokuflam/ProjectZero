@@ -48,6 +48,16 @@ jobs:
             export AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
             export AWS_DEFAULT_REGION=${{ secrets.AWS_REGION }}
             aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ steps.login-ecr.outputs.registry }}
-            docker pull ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPOSITORY }}:${{ github.sha }}
-            ls
+
+            # Pull the latest Docker Compose file from the repo
+            git clone git@github.com:Rokuflam/ProjectZero.git
+
+            # Replace the image in docker-compose file with the latest image
+            sed -i 's|image:.*|image: ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPOSITORY }}:${{ github.sha }}|' docker/docker-compose-local.yml
+
+            # Pull the necessary images
+            docker-compose -f docker/docker-compose-local.yml pull
+
+            # Up the services using docker-compose
+            docker-compose -f docker/docker-compose-local.yml up -d
           EOF
