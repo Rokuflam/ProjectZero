@@ -44,6 +44,7 @@ resource "aws_instance" "dev" {
               sudo amazon-linux-extras install docker -y
               sudo service docker start
               sudo usermod -a -G docker ec2-user
+              sudo yum install git -y
               sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
               sudo chmod +x /usr/local/bin/docker-compose
               mkdir -p /path/to/your/app
@@ -54,15 +55,15 @@ resource "aws_instance" "dev" {
   }
 }
 
-resource "aws_ecr_repository" "app_repo" {
-  name = "app-repo"
+resource "aws_ecr_repository" "development_app_repo" {
+  name = var.ecr_repository
 
   image_scanning_configuration {
     scan_on_push = true
   }
 
   tags = {
-    Name = "app-repo"
+    Name = "development-app-repo"
   }
 }
 
