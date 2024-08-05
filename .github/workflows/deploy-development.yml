@@ -52,7 +52,7 @@ jobs:
             # Navigate to the project directory or clone if not present
             cd /home/${{ secrets.EC2_USER }}/
             if [ ! -d "ProjectZero" ]; then
-              git clone https://github.com/your-username/ProjectZero.git
+              git clone git@github.com:Rokuflam/ProjectZero.git
             fi
             cd ProjectZero
 
