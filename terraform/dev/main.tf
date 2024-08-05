@@ -93,7 +93,7 @@ resource "aws_ecr_repository" "development_app_repo" {
 resource "github_actions_secret" "ec2_ip" {
   repository       = var.github_repository
   secret_name      = "EC2_IP"
-  plaintext_value  = aws_instance.dev.public_ip
+  plaintext_value  = aws_eip.dev_eip.public_ip
 }
 
 resource "github_actions_secret" "ec2_user" {
