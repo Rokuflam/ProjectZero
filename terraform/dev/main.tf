@@ -41,13 +41,25 @@ resource "aws_instance" "dev" {
 
   user_data = <<-EOF
               #!/bin/bash
+              # Install Docker
               sudo amazon-linux-extras install docker -y
               sudo service docker start
               sudo usermod -a -G docker ec2-user
+
+              # Install Git
               sudo yum install git -y
+
+              # Download Docker Compose
               sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
               sudo chmod +x /usr/local/bin/docker-compose
-              mkdir -p /path/to/your/app
+
+              # Setup SSH for Git
+              mkdir -p /home/ec2-user/.ssh
+              echo var.git_private_key > /home/ec2-user/.ssh/id_rsa
+              chmod 600 /home/ec2-user/.ssh/id_rsa
+              echo "Host github.com\n\tStrictHostKeyChecking no\n" > /home/ec2-user/.ssh/config
+              chown -R ec2-user:ec2-user /home/ec2-user/.ssh
+
               EOF
 
   tags = {
