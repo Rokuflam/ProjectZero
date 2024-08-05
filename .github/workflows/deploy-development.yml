@@ -47,7 +47,7 @@ jobs:
         run: |
           ssh -T -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_IP }} << 'EOF'
             # Install git if not already installed
-            sudo apt-get update && sudo apt-get install git -y  # Assuming Ubuntu; adjust for other distributions as necessary
+            sudo yum install git -y  # Assuming Ubuntu; adjust for other distributions as necessary
 
             # Navigate to the project directory or clone if not present
             cd /home/${{ secrets.EC2_USER }}/
