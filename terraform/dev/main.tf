@@ -33,6 +33,10 @@ resource "aws_security_group" "sg_ssh" {
   }
 }
 
+data "local_file" "private_key" {
+  filename = var.private_key_path
+}
+
 resource "aws_instance" "dev" {
   ami           = var.ami_id
   instance_type = var.instance_type
@@ -40,27 +44,26 @@ resource "aws_instance" "dev" {
   key_name      = aws_key_pair.deployer.key_name
 
   user_data = <<-EOF
-              #!/bin/bash
-              # Install Docker
-              sudo amazon-linux-extras install docker -y
-              sudo service docker start
-              sudo usermod -a -G docker ec2-user
+            #!/bin/bash
+            # Install Docker
+            sudo amazon-linux-extras install docker -y
+            sudo service docker start
+            sudo usermod -a -G docker ec2-user
 
-              # Install Git
-              sudo yum install git -y
+            # Download Docker Compose
+            sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+            sudo chmod +x /usr/local/bin/docker-compose
 
-              # Download Docker Compose
-              sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-              sudo chmod +x /usr/local/bin/docker-compose
+            # Install Git
+            sudo yum install git -y
 
-              # Setup SSH for Git
-              mkdir -p /home/ec2-user/.ssh
-              echo var.git_private_key > /home/ec2-user/.ssh/id_rsa
-              chmod 600 /home/ec2-user/.ssh/id_rsa
-              echo "Host github.com\n\tStrictHostKeyChecking no\n" > /home/ec2-user/.ssh/config
-              chown -R ec2-user:ec2-user /home/ec2-user/.ssh
-
-              EOF
+            # Setup SSH for Git
+            mkdir -p /home/ec2-user/.ssh
+            echo '${data.local_file.private_key.content}' > /home/ec2-user/.ssh/id_rsa
+            chmod 600 /home/ec2-user/.ssh/id_rsa
+            echo "Host github.com\n\tStrictHostKeyChecking no\n" > /home/ec2-user/.ssh/config
+            chown -R ec2-user:ec2-user /home/ec2-user/.ssh
+            EOF
 
   tags = {
     Name = "development"
