@@ -8,18 +8,13 @@ provider "github" {
   token        = var.github_token
 }
 
-
 data "local_file" "private_key" {
   filename = var.private_key_path
 }
 
-data "local_file" "public_key" {
-  filename = var.public_key_path
-}
-
 resource "aws_key_pair" "deployer" {
   key_name   = "deployer-key"
-  public_key = data.local_file.public_key.content
+  public_key = file(var.public_key_path)
 }
 
 resource "aws_security_group" "sg_ssh" {
