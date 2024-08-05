@@ -42,6 +42,14 @@ resource "aws_security_group" "sg_ssh" {
   }
 }
 
+resource "aws_eip" "dev_eip" {
+  instance = aws_instance.dev.id
+  vpc      = true
+  tags = {
+    Name = "development-eip"
+  }
+}
+
 resource "aws_instance" "dev" {
   ami           = var.ami_id
   instance_type = var.instance_type
