@@ -58,11 +58,12 @@ jobs:
             cd ${{ vars.REPOSITORY_NAME }}
 
             # Check if example.env exists and copy it to .env if it does
-            if [ ! -f "env_files/.env" ]; then
-              cp "env_files/example.env" "env_files/.env"
+            if [ ! -f "./env_files/.env" ]; then
+              cd ./env_files
+              cp example.env .env
               # Replace ALLOWED_HOSTS value in the .env file
-              if grep -q "ALLOWED_HOSTS=127.0.0.1,localhost" "env_files/.env"; then
-                sed -i "s/ALLOWED_HOSTS=127.0.0.1,localhost/ALLOWED_HOSTS=127.0.0.1,localhost,${{ secrets.DEV_EC2_IP }}/" "env_files/.env"
+              if grep -q "ALLOWED_HOSTS=127.0.0.1,localhost" ".env"; then
+                sed -i "s/ALLOWED_HOSTS=127.0.0.1,localhost/ALLOWED_HOSTS=127.0.0.1,localhost,${{ secrets.DEV_EC2_IP }}/" ".env"
               fi
             fi
 
