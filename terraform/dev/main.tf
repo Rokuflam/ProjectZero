@@ -62,7 +62,7 @@ resource "aws_instance" "dev" {
             # Install Docker
             sudo amazon-linux-extras install docker -y
             sudo service docker start
-            sudo usermod -a -G docker dev-ec2-user
+            sudo usermod -a -G docker ec2-user
 
             # Download Docker Compose
             sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
@@ -72,11 +72,11 @@ resource "aws_instance" "dev" {
             sudo yum install git -y
 
             # Setup SSH for Git
-            mkdir -p /home/dev-ec2-user/.ssh
-            echo '${data.local_file.private_key.content}' > /home/dev-ec2-user/.ssh/id_rsa
-            chmod 600 /home/dev-ec2-user/.ssh/id_rsa
-            echo "Host github.com\n\tStrictHostKeyChecking no\n" > /home/dev-ec2-user/.ssh/config
-            chown -R dev-ec2-user:dev-ec2-user /home/dev-ec2-user/.ssh
+            mkdir -p /home/ec2-user/.ssh
+            echo '${data.local_file.private_key.content}' > /home/ec2-user/.ssh/id_rsa
+            chmod 600 /home/ec2-user/.ssh/id_rsa
+            echo "Host github.com\n\tStrictHostKeyChecking no\n" > /home/ec2-user/.ssh/config
+            chown -R ec2-user:ec2-user /home/ec2-user/.ssh
             EOF
 
   tags = {
@@ -113,7 +113,7 @@ resource "github_actions_secret" "dev_ec2_ip" {
 resource "github_actions_secret" "dev_ec2_user" {
   repository       = var.github_repository
   secret_name      = "DEV_EC2_USER"
-  plaintext_value  = "dev-ec2-user"
+  plaintext_value  = "ec2-user"
 }
 
 resource "github_actions_secret" "dev_ec2_private_key" {
