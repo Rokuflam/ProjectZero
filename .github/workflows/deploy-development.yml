@@ -51,11 +51,11 @@ jobs:
 
             # Navigate to the project directory or clone if not present
             cd /home/${{ secrets.EC2_USER }}/
-            if [ ! -d "ProjectZero" ]; then
+            if [ ! -d "${{ vars.REPOSITORY_NAME }}" ]; then
               ssh-keyscan github.com >> ~/.ssh/known_hosts
-              git clone git@github.com:Rokuflam/ProjectZero.git
+              git clone ${{ vars.SSH_CLONE_LINK }}
             fi
-            cd ProjectZero
+            cd ${{ vars.REPOSITORY_NAME }}
 
             # Ensure you're on the development branch and sync with origin
             git checkout development

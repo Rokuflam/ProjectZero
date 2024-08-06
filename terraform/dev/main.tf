@@ -5,19 +5,19 @@ provider "aws" {
 }
 
 provider "github" {
-  token        = var.github_token
+  token = var.github_token
 }
 
 data "local_file" "private_key" {
   filename = var.private_key_path
 }
 
-resource "aws_key_pair" "deployer" {
-  key_name   = "deployer-key"
+resource "aws_key_pair" "dev_deployer" {
+  key_name   = "deployer-dev-key"
   public_key = file(var.public_key_path)
 }
 
-resource "aws_security_group" "sg_ssh" {
+resource "aws_security_group" "sg_dev_ssh" {
   name        = "sg_dev_ssh"
   description = "Allow SSH inbound traffic"
   vpc_id      = var.vpc_id
@@ -51,19 +51,11 @@ resource "aws_security_group" "sg_ssh" {
   }
 }
 
-resource "aws_eip" "dev_eip" {
-  instance = aws_instance.dev.id
-  vpc      = true
-  tags = {
-    Name = "development-eip"
-  }
-}
-
 resource "aws_instance" "dev" {
   ami           = var.ami_id
   instance_type = var.instance_type
-  security_groups = [aws_security_group.sg_ssh.name]
-  key_name      = aws_key_pair.deployer.key_name
+  security_groups = [aws_security_group.sg_dev_ssh.name]
+  key_name      = aws_key_pair.dev_deployer.key_name
 
   user_data = <<-EOF
             #!/bin/bash
@@ -92,6 +84,14 @@ resource "aws_instance" "dev" {
   }
 }
 
+resource "aws_eip" "dev_eip" {
+  instance = aws_instance.dev.id
+  domain   = "vpc"
+  tags = {
+    Name = "development-eip"
+  }
+}
+
 resource "aws_ecr_repository" "development_app_repo" {
   name = var.ecr_repository
 
@@ -104,32 +104,32 @@ resource "aws_ecr_repository" "development_app_repo" {
   }
 }
 
-resource "github_actions_secret" "ec2_ip" {
+resource "github_actions_secret" "dev_ec2_ip" {
   repository       = var.github_repository
-  secret_name      = "EC2_IP"
+  secret_name      = "DEV_EC2_IP"
   plaintext_value  = aws_eip.dev_eip.public_ip
 }
 
-resource "github_actions_secret" "ec2_user" {
+resource "github_actions_secret" "dev_ec2_user" {
   repository       = var.github_repository
-  secret_name      = "EC2_USER"
-  plaintext_value  = "ec2-user"
+  secret_name      = "DEV_EC2_USER"
+  plaintext_value  = "dev-ec2-user"
 }
 
-resource "github_actions_secret" "ec2_private_key" {
+resource "github_actions_secret" "dev_ec2_private_key" {
   repository       = var.github_repository
-  secret_name      = "EC2_PRIVATE_KEY"
+  secret_name      = "DEV_EC2_PRIVATE_KEY"
   plaintext_value  = file(var.private_key_path)
 }
 
-resource "github_actions_secret" "aws_region" {
+resource "github_actions_secret" "dev_aws_region" {
   repository       = var.github_repository
-  secret_name      = "AWS_REGION"
+  secret_name      = "DEV_AWS_REGION"
   plaintext_value  = var.aws_region
 }
 
-resource "github_actions_secret" "ecr_repository" {
+resource "github_actions_secret" "dev_ecr_repository" {
   repository       = var.github_repository
-  secret_name      = "ECR_REPOSITORY"
+  secret_name      = "DEVECR_REPOSITORY"
   plaintext_value  = var.ecr_repository
 }

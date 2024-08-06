@@ -151,7 +151,25 @@ AWS only:
 				"ecr:DeleteRepository",
 				"ecr:DescribeRepositories",
 				"ecr:TagResource",
-				"ecr:ListTagsForResource"
+				"ecr:ListTagsForResource",
+				"ecr:GetAuthorizationToken",
+				"ecr:BatchCheckLayerAvailability",
+				"ecr:GetDownloadUrlForLayer",
+				"ecr:GetRepositoryPolicy",
+				"ecr:DescribeRepositories",
+				"ecr:ListImages",
+				"ecr:DescribeImages",
+				"ecr:BatchGetImage",
+				"ecr:InitiateLayerUpload",
+				"ecr:UploadLayerPart",
+				"ecr:CompleteLayerUpload",
+				"ecr:PutImage",
+				"ec2:AllocateAddress",
+				"ec2:DescribeAddresses",
+				"ec2:DescribeAddressesAttribute",
+				"ec2:ReleaseAddress",
+				"ec2:AssociateAddress",
+				"ec2:DisassociateAddress"
 			],
 			"Resource": "*"
 		}
