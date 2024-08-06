@@ -3,8 +3,11 @@ name: Deploy to Development env
 
 on:
   workflow_run:
-      workflows: ['Pylint']
-      types: [completed]
+    workflows: ["Pylint"]
+    types:
+      - completed
+    branches:
+      - development
 
 jobs:
   build_and_deploy:
