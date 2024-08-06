@@ -2,9 +2,6 @@
 name: Deploy to Development env
 
 on:
-  push:
-    branches:
-      - development
   workflow_run:
     workflows: ["Pylint"]
     types:
