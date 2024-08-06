@@ -29,7 +29,6 @@ jobs:
           echo "${{ secrets.EC2_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.EC2_IP }} >> ~/.ssh/known_hosts
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
 
       - name: Login to Amazon ECR
         id: login-ecr
@@ -53,6 +52,7 @@ jobs:
             # Navigate to the project directory or clone if not present
             cd /home/${{ secrets.EC2_USER }}/
             if [ ! -d "ProjectZero" ]; then
+              ssh-keyscan github.com >> ~/.ssh/known_hosts
               git clone git@github.com:Rokuflam/ProjectZero.git
             fi
             cd ProjectZero
