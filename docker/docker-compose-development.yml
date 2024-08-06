@@ -12,6 +12,12 @@ services:
     volumes:
       - ../backend:/usr/src/backend
       - dev-static-data:/vol/web
+    environment:
+      - DB_HOST=db
+      - DB_NAME=dbname
+      - DB_USER=rootuser
+      - DB_PASS=changeme
+      - DEBUG=1
     depends_on:
       - db
 
