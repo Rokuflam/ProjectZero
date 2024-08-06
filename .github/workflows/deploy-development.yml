@@ -65,6 +65,7 @@ jobs:
               if grep -q "ALLOWED_HOSTS=127.0.0.1,localhost" ".env"; then
                 sed -i "s/ALLOWED_HOSTS=127.0.0.1,localhost/ALLOWED_HOSTS=127.0.0.1,localhost,${{ secrets.DEV_EC2_IP }}/" ".env"
               fi
+              cd ..
             fi
 
             # Ensure you're on the development branch and sync with origin
