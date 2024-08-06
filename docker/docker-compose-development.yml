@@ -5,6 +5,8 @@ services:
     build:
       context: ..
       dockerfile: ./docker/Dockerfile
+    ports:
+      - "8000:8000"
     volumes:
       - ../backend:/usr/src/backend
       - dev-static-data:/vol/web
@@ -27,13 +29,11 @@ services:
       - POSTGRES_PASSWORD=changeme
 
   nginx:
-    build:
-      context: ../nginx/dev
+    image: nginx:alpine
     ports:
-      - "443:443"
+      - "80:80"
     volumes:
-      - ./nginx/conf:/etc/nginx/conf.d
-      - dev-static-data:/vol/web
+      - ../nginx/dev:/etc/nginx/conf.d
     depends_on:
       - app
 
