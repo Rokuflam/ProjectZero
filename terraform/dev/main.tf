@@ -130,6 +130,6 @@ resource "github_actions_secret" "dev_aws_region" {
 
 resource "github_actions_secret" "dev_ecr_repository" {
   repository       = var.github_repository
-  secret_name      = "DEVECR_REPOSITORY"
+  secret_name      = "DEV_ECR_REPOSITORY"
   plaintext_value  = var.ecr_repository
 }

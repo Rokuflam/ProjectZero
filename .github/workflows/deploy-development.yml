@@ -21,14 +21,14 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: ${{ secrets.DEV_AWS_REGION }}
 
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.EC2_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          echo "${{ secrets.DEV_EC2_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.EC2_IP }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H ${{ secrets.DEV_EC2_IP }} >> ~/.ssh/known_hosts
 
       - name: Login to Amazon ECR
         id: login-ecr
@@ -36,21 +36,21 @@ jobs:
 
       - name: Build, tag, and push image to ECR
         run: |
-          docker build -t ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPOSITORY }}:${{ github.sha }} -f docker/Dockerfile .
-          docker push ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPOSITORY }}:${{ github.sha }}
+          docker build -t ${{ steps.login-ecr.outputs.registry }}/${{ secrets.DEV_ECR_REPOSITORY }}:${{ github.sha }} -f docker/Dockerfile .
+          docker push ${{ steps.login-ecr.outputs.registry }}/${{ secrets.DEV_ECR_REPOSITORY }}:${{ github.sha }}
         env:
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-          ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+          AWS_REGION: ${{ secrets.DEV_AWS_REGION }}
+          ECR_REPOSITORY: ${{ secrets.DEV_ECR_REPOSITORY }}
           IMAGE_TAG: ${{ github.sha }}
 
       - name: Deploy to EC2
         run: |
-          ssh -T -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_IP }} << 'EOF'
+          ssh -T -o StrictHostKeyChecking=no ${{ secrets.DEV_EC2_USER }}@${{ secrets.DEV_EC2_IP }} << 'EOF'
             # Install git if not already installed
             sudo yum install git -y  # Assuming Ubuntu; adjust for other distributions as necessary
 
             # Navigate to the project directory or clone if not present
-            cd /home/${{ secrets.EC2_USER }}/
+            cd /home/${{ secrets.DEV_EC2_USER }}/
             if [ ! -d "${{ vars.REPOSITORY_NAME }}" ]; then
               ssh-keyscan github.com >> ~/.ssh/known_hosts
               git clone ${{ vars.SSH_CLONE_LINK }}
