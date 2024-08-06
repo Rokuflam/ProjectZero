@@ -13,11 +13,10 @@ services:
       - ../backend:/usr/src/backend
       - dev-static-data:/vol/web
     environment:
-      - DB_HOST=db
-      - DB_NAME=dbname
-      - DB_USER=rootuser
-      - DB_PASS=changeme
-      - DEBUG=1
+      - DB_HOST=${DB_HOST}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
     depends_on:
       - db
 
@@ -28,9 +27,9 @@ services:
     env_file:
       - ../env_files/.env
     environment:
-      - POSTGRES_DB=dbname
-      - POSTGRES_USER=rootuser
-      - POSTGRES_PASSWORD=changeme
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
 
   nginx:
     image: nginx:alpine
