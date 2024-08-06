@@ -61,7 +61,7 @@ jobs:
             if [ ! -f "./env_files/.env" ]; then
               cd ./env_files
               # Replace ALLOWED_HOSTS value in the example.env file
-              if grep -q "ALLOWED_HOSTS=127.0.0.1,loclahost" "example.env"; then
+              if grep -q "ALLOWED_HOSTS=127.0.0.1,loclahost" example.env; then
                 sed -i "s/ALLOWED_HOSTS=127.0.0.1,loclahost/ALLOWED_HOSTS=${{ secrets.DEV_EC2_IP }}/" example.env
               fi
               cp example.env .env
