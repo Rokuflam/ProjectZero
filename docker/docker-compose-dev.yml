@@ -17,10 +17,10 @@ services:
 
   db:
     image: postgres:16-alpine
-    volumes:
-      - dev-db-data:/var/lib/postgresql/data
     env_file:
       - ../env_files/.env
+    volumes:
+      - dev-db-data:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER=${DB_USER}
