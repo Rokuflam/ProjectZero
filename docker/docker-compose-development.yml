@@ -13,10 +13,11 @@ services:
       - ../backend:/usr/src/backend
       - dev-static-data:/vol/web
     environment:
-      - DB_HOST=${DB_HOST}
-      - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
-      - DB_PASS=${DB_PASS}
+      - DB_HOST=db
+      - DB_NAME=dbname
+      - DB_USER=rootuser
+      - DB_PASS=changeme
+      - DEBUG=1
     depends_on:
       - db
 
