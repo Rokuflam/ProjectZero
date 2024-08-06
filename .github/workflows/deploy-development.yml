@@ -36,7 +36,7 @@ jobs:
 
       - name: Build, tag, and push image to ECR
         run: |
-          docker build -t ${{ steps.login-ecr.outputs.registry }}/${{ secrets.DEV_ECR_REPOSITORY }}:${{ github.sha }} -f docker/Dockerfile .
+          docker build -t ${{ steps.login-ecr.outputs.registry }}/${{ secrets.DEV_ECR_REPOSITORY }}:${{ github.sha }} -f docker/dev.Dockerfile .
           docker push ${{ steps.login-ecr.outputs.registry }}/${{ secrets.DEV_ECR_REPOSITORY }}:${{ github.sha }}
         env:
           AWS_REGION: ${{ secrets.DEV_AWS_REGION }}
@@ -60,10 +60,6 @@ jobs:
             # Check if example.env exists and copy it to .env if it does
             if [ ! -f "./env_files/.env" ]; then
               cd ./env_files
-
-              # Replace ALLOWED_HOSTS value in the example.env file
-              sed -i "s/ALLOWED_HOSTS=127.0.0.1,loclahost/ALLOWED_HOSTS=${{ secrets.DEV_EC2_IP }}/" example.env
-
               cp example.env .env
               cd ..
             fi
