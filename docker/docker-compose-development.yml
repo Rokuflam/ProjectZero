@@ -28,9 +28,9 @@ services:
     env_file:
       - ../env_files/.env
     environment:
-      - POSTGRES_DB=${DB_NAME}
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_DB=dbname
+      - POSTGRES_USER=rootuser
+      - POSTGRES_PASSWORD=changeme
 
   nginx:
     image: nginx:alpine
