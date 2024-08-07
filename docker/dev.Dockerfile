@@ -21,13 +21,16 @@ RUN pip install --upgrade pip && \
     poetry install --no-dev && \
     rm -rf /tmp && \
     apk del .tmp-build-deps && \
+    addgroup -g 1001 django-group && \
     adduser \
         --disabled-password \
         --no-create-home \
+        --uid 1001 \
+        --ingroup django-group \
         django-user && \
     mkdir -p /vol/web/media && \
     mkdir -p /vol/web/static && \
-    chown -R django-user:django-user /vol && \
+    chown -R django-user:django-group /vol && \
     chmod -R 755 /vol && \
     chmod -R +x /scripts
 

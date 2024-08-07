@@ -6,9 +6,6 @@ services:
     build:
       context: ..
       dockerfile: ./docker/Dockerfile
-      args:
-        UID: ${HOST_UID}
-        GID: ${HOST_GID}
     ports:
       - "8000:8000"
     env_file:
