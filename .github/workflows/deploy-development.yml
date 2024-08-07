@@ -57,13 +57,6 @@ jobs:
             fi
             cd ${{ vars.REPOSITORY_NAME }}
 
-            # Check if example.env exists and copy it to .env if it does
-            if [ ! -f "./env_files/.env" ]; then
-              cd ./env_files
-              cp example.env .env
-              cd ..
-            fi
-
             # Ensure you're on the development branch and sync with origin
             git checkout development
             git fetch origin development
@@ -71,6 +64,14 @@ jobs:
             # Reset local changes to allow a clean pull
             git reset --hard origin/development
             git pull origin development
+
+            # Check if example.env exists and copy it to .env if it does
+            if [ ! -f "./env_files/.env" ]; then
+              cd ./env_files
+              cp example.env .env
+              sed -i 's/ALLOWED_HOSTS="127.0.0.1,loclahost"/ALLOWED_HOSTS="127.0.0.1,loclahost,${{ secrets.DEV_EC2_IP }}"/' .env
+              cd ..
+            fi
 
             # Navigate to the Docker directory and run docker-compose
             cd docker
