@@ -5,18 +5,13 @@ services:
     build:
       context: ..
       dockerfile: ./docker/Dockerfile
-      args:
-        USER_ID: ${USER_ID}
-        GROUP_ID: ${GROUP_ID}
     ports:
       - "8000:8000"
     env_file:
       - ../env_files/.env
     volumes:
-      - ../backend:/usr/src/app
-      - ../staticfiles:/vol/web/static
-      - ../media:/vol/web/media
-    user: "${USER_ID}:${GROUP_ID}"
+      - ../backend:/usr/src/backend
+      - dev-static-data:/vol/web
     depends_on:
       - db
 
@@ -33,10 +28,10 @@ services:
       - "80:80"
     volumes:
       - ../nginx/dev:/etc/nginx/conf.d
-      - ../staticfiles:/vol/web/static
-      - ../media:/vol/web/media
+      - dev-static-data:/vol/web/
     depends_on:
       - app
 
 volumes:
   dev-db-data:
+  dev-static-data:
