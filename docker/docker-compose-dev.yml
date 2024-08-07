@@ -2,21 +2,26 @@ version: "3.9"
 
 services:
   app:
+    container_name: dev-app
     build:
       context: ..
       dockerfile: ./docker/Dockerfile
+      args:
+        UID: ${HOST_UID}
+        GID: ${HOST_GID}
     ports:
       - "8000:8000"
     env_file:
       - ../env_files/.env
     volumes:
-      - ../backend:/usr/src/backend
+      - ../app:/home/nonroot/app
       - ../staticfiles:/vol/web/static
       - ../media:/vol/web/media
     depends_on:
       - db
 
   db:
+    container_name: dev-db
     image: postgres:16-alpine
     env_file:
       - ../env_files/.env
@@ -24,6 +29,7 @@ services:
       - dev-db-data:/var/lib/postgresql/data
 
   nginx:
+    container_name: dev-nginx
     image: nginx:alpine
     ports:
       - "80:80"
