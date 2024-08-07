@@ -5,6 +5,9 @@ services:
     build:
       context: ..
       dockerfile: ./docker/Dockerfile
+      args:
+        USER_ID: ${USER_ID}
+        GROUP_ID: ${GROUP_ID}
     ports:
       - "8000:8000"
     env_file:
@@ -13,6 +16,7 @@ services:
       - ../backend:/usr/src/app
       - ../staticfiles:/vol/web/static
       - ../media:/vol/web/media
+    user: "${USER_ID}:${GROUP_ID}"
     depends_on:
       - db
 
