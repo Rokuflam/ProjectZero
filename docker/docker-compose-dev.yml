@@ -2,7 +2,6 @@ version: "3.9"
 
 services:
   app:
-    container_name: dev-app
     build:
       context: ..
       dockerfile: ./docker/Dockerfile
@@ -11,14 +10,13 @@ services:
     env_file:
       - ../env_files/.env
     volumes:
-      - ../app:/home/nonroot/app
+      - ../backend:/usr/src/app
       - ../staticfiles:/vol/web/static
       - ../media:/vol/web/media
     depends_on:
       - db
 
   db:
-    container_name: dev-db
     image: postgres:16-alpine
     env_file:
       - ../env_files/.env
@@ -26,7 +24,6 @@ services:
       - dev-db-data:/var/lib/postgresql/data
 
   nginx:
-    container_name: dev-nginx
     image: nginx:alpine
     ports:
       - "80:80"
