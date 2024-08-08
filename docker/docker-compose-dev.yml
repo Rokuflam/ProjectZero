@@ -29,20 +29,10 @@ services:
       - "443:443"
     volumes:
       - ../nginx/dev:/etc/nginx/conf.d
-      - ../certbot/conf:/etc/nginx/ssl
-      - ../certbot/www:/var/www/certbot
+      - ../ssl:/etc/nginx/ssl
       - dev-static-data:/vol/web/
     depends_on:
       - app
-      - certbot
-
-  certbot:
-    image: certbot/certbot
-    volumes:
-      - ../certbot/conf:/etc/letsencrypt
-      - ../certbot/www:/var/www/certbot
-    entrypoint: >
-      sh -c "trap exit TERM; while :; do certbot renew --webroot -w /var/www/certbot; sleep 12h & wait $${!}; done"
 
 volumes:
   dev-db-data:
