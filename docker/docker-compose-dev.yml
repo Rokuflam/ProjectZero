@@ -26,21 +26,11 @@ services:
     image: nginx:alpine
     ports:
       - "80:80"
-      - "443:443"
     volumes:
-      - ../nginx/dev/:/etc/nginx/conf.d/:ro
-      - ../certbot/www:/var/www/certbot/:ro
-      - ../certbot/conf/:/etc/nginx/ssl/:ro
+      - ../nginx/dev:/etc/nginx/conf.d
       - dev-static-data:/vol/web/
     depends_on:
       - app
-    restart: always
-
-  certbot:
-    image: certbot/certbot:latest
-    volumes:
-      - ../certbot/www/:/var/www/certbot/:rw
-      - ../certbot/conf/:/etc/letsencrypt/:rw
 
 volumes:
   dev-db-data:
