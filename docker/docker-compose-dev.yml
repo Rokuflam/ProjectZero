@@ -28,18 +28,20 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ../nginx/dev:/etc/nginx/conf.d
+      - ../nginx/dev/:/etc/nginx/conf.d/:ro
+      - ../certbot/www:/var/www/certbot/:ro
+      - ../certbot/conf/:/etc/nginx/ssl/:ro
       - dev-static-data:/vol/web/
-      - ./nginx/certs:/etc/nginx/certs
     depends_on:
       - app
+    restart: always
 
   certbot:
-    image: certbot/certbot
+    image: certbot/certbot:latest
     volumes:
-      - ./nginx/certs:/etc/letsencrypt
-      - ./nginx/html:/var/www/html
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot certonly --webroot -w /var/www/html --email ${LETSENCRYPT_EMAIL} --agree-tos --no-eff-email -d ${LETSENCRYPT_HOST}; sleep 12h & wait $${!}; done;'"
+      - ../certbot/www/:/var/www/certbot/:rw
+      - ../certbot/conf/:/etc/letsencrypt/:rw
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot certonly --webroot -w /var/www/html --email ${} --agree-tos --no-eff-email -d ${LETSENCRYPT_HOST}; sleep 12h & wait $${!}; done;'"
 
 volumes:
   dev-db-data:
