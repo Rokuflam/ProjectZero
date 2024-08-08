@@ -26,11 +26,20 @@ services:
     image: nginx:alpine
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ../nginx/dev:/etc/nginx/conf.d
       - dev-static-data:/vol/web/
+      - ./nginx/certs:/etc/nginx/certs
     depends_on:
       - app
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./nginx/certs:/etc/letsencrypt
+      - ./nginx/html:/var/www/html
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot certonly --webroot -w /var/www/html --email ${LETSENCRYPT_EMAIL} --agree-tos --no-eff-email -d ${LETSENCRYPT_HOST}; sleep 12h & wait $${!}; done;'"
 
 volumes:
   dev-db-data:

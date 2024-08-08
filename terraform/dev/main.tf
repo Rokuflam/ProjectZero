@@ -77,6 +77,7 @@ resource "aws_instance" "dev" {
             chmod 600 /home/ec2-user/.ssh/id_rsa
             echo "Host github.com\n\tStrictHostKeyChecking no\n" > /home/ec2-user/.ssh/config
             chown -R ec2-user:ec2-user /home/ec2-user/.ssh
+            ssh-keyscan github.com >> ~/.ssh/known_hosts
             EOF
 
   tags = {
