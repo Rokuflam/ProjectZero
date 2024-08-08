@@ -30,9 +30,11 @@ services:
     volumes:
       - ../nginx/dev:/etc/nginx/conf.d
       - ../certbot/conf:/etc/nginx/ssl
+      - ../certbot/www:/var/www/certbot
       - dev-static-data:/vol/web/
     depends_on:
       - app
+      - certbot
 
   certbot:
     image: certbot/certbot
