@@ -22,6 +22,17 @@ services:
     volumes:
       - dev-db-data:/var/lib/postgresql/data
 
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ../nginx/dev:/etc/nginx/conf.d
+      # - ../ssl:/etc/nginx/ssl only if you have certificate
+      - dev-static-data:/vol/web/
+    depends_on:
+      - app
 
 volumes:
   dev-db-data:

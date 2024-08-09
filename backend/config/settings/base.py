@@ -126,7 +126,7 @@ MIDDLEWARE = [
     # Internal
     # healthcheck
     'apps.core.middleware.healthcheck.HealthCheckMiddleware',
-    
+
     # sql_profiler
     'apps.core.middleware.sql_profiler.SQLProfilerMiddleware',
 ]
@@ -165,9 +165,10 @@ DATABASES = {
         'NAME': os.environ.get('DB_NAME'),
         'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('DB_PASS'),
+        'PORT': os.environ.get('DB_PORT', '5432'),  # Default PostgreSQL port
     }
 }
-
+print(DATABASES)
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 

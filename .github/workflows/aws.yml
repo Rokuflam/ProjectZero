@@ -29,7 +29,7 @@ name: Deploy to Amazon ECS
 on:
   workflow_run:
     workflows: ["Pylint"]
-    branches: ["change_me"]
+    branches: ["development"]
     types:
       - completed
 
