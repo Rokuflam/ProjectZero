@@ -113,10 +113,10 @@ Terraform is used to manage and provision your cloud infrastructure. Here are th
 ### Prerequisites
 
 - Terraform installed on your machine. [Download Terraform](https://www.terraform.io/downloads.html)
+- Create branch with name: `development`, for CI/CD to work
 
 AWS only:
 - AWS CLI installed and configured with your AWS credentials.
-- Create branch with name: `development`, for CI/CD to work
 - Create an IAM user with next permissions:
 
 ```bash
