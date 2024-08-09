@@ -249,7 +249,7 @@ SIMPLE_JWT = {
 SPECTACULAR_SETTINGS = {
     'TITLE': 'ProjectZero',
     'DESCRIPTION': 'Template to start any project on Django/DRF',
-    'VERSION': '1.1.0',
+    'VERSION': '1.2.0',
     'COMPONENT_SPLIT_REQUEST': True,
     'SERVE_INCLUDE_SCHEMA': False,
 }

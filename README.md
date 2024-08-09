@@ -16,7 +16,7 @@ A DRF project to start new projects faster and better.
 
 ## Features
 
-- Django 5.0+
+- Django 5+
 - Django REST Framework for building APIs
 - User authentication and authorization
 - Social authentication

@@ -1,27 +1,27 @@
 [tool.poetry]
 name = "ProjectZero"
-version = "1.1.0"
+version = "1.2.0"
 description = "Django skeleton with most useful functionalities for new projects."
 authors = ["Roman <98953084+Rokuflam@users.noreply.github.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-Django = "^5.0"
-django-allauth = "^0.61"
+Django = "^5.1"
+django-allauth = "^0.63"
 django-extensions = "^3.2"
-djangorestframework = "^3.14"
+djangorestframework = "^3.15"
 djangorestframework-simplejwt = "^5.3"
 drf-spectacular = "^0.27"
-uvicorn = "^0.27"
-pillow = "^10.2"
+uvicorn = "^0.30"
+pillow = "^10.4"
 psycopg2-binary = "^2.9"
 python = "^3.12"
-sentry-sdk = {version = "^1.40", extras = ["django"]}
-whitenoise = "^6.6"
-django-anymail = "^10.2"
+sentry-sdk = {version = "^1.45", extras = ["django"]}
+whitenoise = "^6.7"
+django-anymail = "^11"
 
 [tool.poetry.dev-dependencies]
-pylint = "^3.1"
+pylint = "^3.2"
 
 [build-system]
 requires = ["poetry-core"]
