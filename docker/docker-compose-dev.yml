@@ -29,7 +29,6 @@ services:
       - "443:443"
     volumes:
       - ../nginx/dev:/etc/nginx/conf.d
-      # - ../ssl:/etc/nginx/ssl only if you have certificate
       - dev-static-data:/vol/web/
     depends_on:
       - app
