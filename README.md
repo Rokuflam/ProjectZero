@@ -209,7 +209,7 @@ AWS only:
                                                #  9. **Workflows**: Access Read and write
     github_owner    = "replace-me"           # username of github repository owner or just a user
     github_repository = "replace-me"         # Just the repository name
-    github_repository_ssh_clone_url =        # URL to clone repository via ssh
+    github_repository_ssh_clone_url = ""     # URL to clone repository via ssh
     ecr_repository  = "replace-me"           # Just the ECR repository name
     ```
 
