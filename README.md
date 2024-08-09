@@ -88,7 +88,7 @@ and choose `EMAIL_BACKEND` in `backend/config/settings/{env you use}.py`
 ## Usage
 - Run the development server:
     ```bash
-    docker-compose -f docker/docker-compose-local.yml start
+    docker-compose -f docker/docker-compose-local.yml up
     ```
 
 - Run tests
@@ -117,6 +117,7 @@ Terraform is used to manage and provision your cloud infrastructure. Here are th
 AWS only:
 - AWS CLI installed and configured with your AWS credentials.
 - Create an IAM user with next permissions:
+- Create branch with name: `development`, for CI/CD to work
 
 ```bash
 {
@@ -197,17 +198,18 @@ AWS only:
     public_key_path = "replace-me "          # Ensure Windows path is properly escaped
     private_key_path = "replace-me"          # Ensure Windows path is properly escaped
     github_token    = "replace-me"           # user github token with next permissions:
-                                             #  1. **Actions**: Access Read and write
-                                             #  2. **Contents**: Access Read and write
-                                             #  3. **Deployments**: Access Read and write
-                                             #  4. **Environments**: Access Read-only
-                                             #  5. **Metadata**: Access Read-only
-                                             #  6. **Pull Requests**: Access Read-only
-                                             #  7. **Secrets**: Access Read and write
-                                             #  8. **Variables**: Access Read and write
-                                             #  9. **Workflows**: Access Read and write
+                                               #  1. **Actions**: Access Read and write
+                                               #  2. **Contents**: Access Read and write
+                                               #  3. **Deployments**: Access Read and write
+                                               #  4. **Environments**: Access Read-only
+                                               #  5. **Metadata**: Access Read-only
+                                               #  6. **Pull Requests**: Access Read-only
+                                               #  7. **Secrets**: Access Read and write
+                                               #  8. **Variables**: Access Read and write
+                                               #  9. **Workflows**: Access Read and write
     github_owner    = "replace-me"           # username of github repository owner or just a user
     github_repository = "replace-me"         # Just the repository name
+    github_repository_ssh_clone_url =        # URL to clone repository via ssh
     ecr_repository  = "replace-me"           # Just the ECR repository name
     ```
 

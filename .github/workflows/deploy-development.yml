@@ -51,11 +51,11 @@ jobs:
 
             # Navigate to the project directory or clone if not present
             cd /home/${{ secrets.DEV_EC2_USER }}/
-            if [ ! -d "${{ vars.REPOSITORY_NAME }}" ]; then
+            if [ ! -d "${{ secrets.REPOSITORY_NAME }}" ]; then
               ssh-keyscan github.com >> ~/.ssh/known_hosts
-              git clone ${{ vars.SSH_CLONE_LINK }}
+              git clone ${{ secrets.SSH_CLONE_LINK }}
             fi
-            cd ${{ vars.REPOSITORY_NAME }}
+            cd ${{ secrets.REPOSITORY_NAME }}
 
             # Ensure you're on the development branch and sync with origin
             git checkout development

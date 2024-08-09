@@ -40,6 +40,11 @@ variable "github_repository" {
   description = "The GitHub repository name"
 }
 
+variable "github_repository_ssh_clone_url" {
+  description = "URL to clone repository via ssh"
+  type        = string
+}
+
 variable "ecr_repository" {
   description = "The name of the ECR repository"
   default     = "app-repo"

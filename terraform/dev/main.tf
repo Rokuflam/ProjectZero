@@ -134,3 +134,15 @@ resource "github_actions_secret" "dev_ecr_repository" {
   secret_name      = "DEV_ECR_REPOSITORY"
   plaintext_value  = var.ecr_repository
 }
+
+resource "github_actions_secret" "repository_name" {
+  repository = var.github_repository
+  secret_name = "REPOSITORY_NAME"
+  plaintext_value = var.github_repository
+}
+
+resource "github_actions_secret" "ssh_clone_link" {
+  repository = var.github_repository
+  secret_name = "SSH_CLONE_LINK"
+  plaintext_value = var.github_repository_ssh_clone_url
+}
