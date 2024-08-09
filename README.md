@@ -12,7 +12,12 @@ A DRF project to start new projects faster and better.
 - [Usage](#usage)
 - [API Documentation](#api-documentation)
 - [Acknowledgments](#acknowledgments)
-- [Terraform Setup](tutorials/dev-terraform.md)
+
+## Tutorials
+
+### Environment set-up
+- [Development set-up using Terraform](tutorials/dev-terraform.md)
+- [Development set-up using AWS Console](tutorials/dev-aws-ui.md)
 
 ## Features
 
