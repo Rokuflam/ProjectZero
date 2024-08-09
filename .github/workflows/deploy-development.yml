@@ -36,7 +36,7 @@ jobs:
 
       - name: Build, tag, and push image to ECR
         run: |
-          docker build -t ${{ steps.login-ecr.outputs.registry }}/${{ secrets.DEV_ECR_REPOSITORY }}:${{ github.sha }} -f docker/dev.Dockerfile .
+          docker build --no-cache -t ${{ steps.login-ecr.outputs.registry }}/${{ secrets.DEV_ECR_REPOSITORY }}:${{ github.sha }} -f docker/dev.Dockerfile .
           docker push ${{ steps.login-ecr.outputs.registry }}/${{ secrets.DEV_ECR_REPOSITORY }}:${{ github.sha }}
         env:
           AWS_REGION: ${{ secrets.DEV_AWS_REGION }}
@@ -76,5 +76,5 @@ jobs:
             # Navigate to the Docker directory and run docker-compose
             cd docker
             docker-compose -f docker-compose-dev.yml pull
-            docker-compose -f docker-compose-dev.yml up -d
+            docker-compose -f docker-compose-dev.yml up -d --force-recreate
           EOF
