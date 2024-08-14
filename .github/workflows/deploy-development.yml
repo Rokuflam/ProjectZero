@@ -1,21 +1,25 @@
-# deploy.tpl
+# Workflow name for deploying to the development environment
 name: Deploy to Development env
 
+# Trigger the workflow on push events to the "development" branch
 on:
   push:
     branches:
       - development
 
 jobs:
+  # Define a job named "build_and_deploy" that runs on the latest Ubuntu environment
   build_and_deploy:
     runs-on: ubuntu-latest
 
     steps:
+      # Step to check out the code from the "development" branch
       - name: Checkout
         uses: actions/checkout@v3
         with:
           ref: development
 
+      # Step to configure AWS credentials using secrets stored in GitHub
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -23,6 +27,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.DEV_AWS_REGION }}
 
+      # Step to set up SSH access to the EC2 instance
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
@@ -30,10 +35,12 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.DEV_EC2_IP }} >> ~/.ssh/known_hosts
 
+      # Step to log in to Amazon ECR (Elastic Container Registry)
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
+      # Step to build, tag, and push the Docker image to ECR
       - name: Build, tag, and push image to ECR
         run: |
           docker build --no-cache -t ${{ steps.login-ecr.outputs.registry }}/${{ secrets.DEV_ECR_REPOSITORY }}:${{ github.sha }} -f docker/dev.Dockerfile .
@@ -43,6 +50,7 @@ jobs:
           ECR_REPOSITORY: ${{ secrets.DEV_ECR_REPOSITORY }}
           IMAGE_TAG: ${{ github.sha }}
 
+      # Step to deploy the Docker image to the EC2 instance
       - name: Deploy to EC2
         run: |
           ssh -T -o StrictHostKeyChecking=no ${{ secrets.DEV_EC2_USER }}@${{ secrets.DEV_EC2_IP }} << 'EOF'
@@ -69,7 +77,7 @@ jobs:
             if [ ! -f "./env_files/.env" ]; then
               cd ./env_files
               cp example.env .env
-              sed -i 's/ALLOWED_HOSTS="127.0.0.1,loclahost"/ALLOWED_HOSTS="127.0.0.1,loclahost,${{ secrets.DEV_EC2_IP }}"/' .env
+              sed -i 's/ALLOWED_HOSTS="127.0.0.1"/ALLOWED_HOSTS="127.0.0.1,${{ secrets.DEV_EC2_IP }}"/' .env
               cd ..
             fi
 

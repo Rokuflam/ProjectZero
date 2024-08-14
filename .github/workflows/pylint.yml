@@ -1,24 +1,35 @@
+# Define the name of the GitHub Actions workflow
 name: Pylint
 
+# Trigger the workflow on every push to any branch
 on: ["push"]
 
 jobs:
+  # Define a job named "build" that runs the Pylint analysis
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Use the latest version of Ubuntu as the runner environment
     strategy:
       matrix:
-        python-version: ["3.12"]
+        python-version: ["3.12"]  # Test against Python version 3.12
+
     steps:
+    # Step to check out the code from the repository
     - uses: actions/checkout@v3
+
+    # Step to set up Python on the runner using the version specified in the matrix
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
+
+    # Step to install Python dependencies, including Pylint
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip
-        pip install pylint
+        python -m pip install --upgrade pip  # Upgrade pip to the latest version
+        pip install pylint  # Install Pylint for code analysis
+
+    # Step to run Pylint and analyze the code in the "backend/apps" directory
     - name: Analysing the code with pylint
       run: |
-        cd backend
-        python -m pylint apps
+        cd backend  # Change directory to the backend folder
+        python -m pylint apps  # Run Pylint on the "apps" directory within the backend
