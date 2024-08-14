@@ -28,12 +28,13 @@ jobs:
           aws-region: ${{ secrets.DEV_AWS_REGION }}
 
       # Step to set up SSH access to the EC2 instance
-      #- name: Set up SSH
-      #  run: |
-      #    mkdir -p ~/.ssh
-      #    echo "${{ secrets.DEV_EC2_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-      #    chmod 600 ~/.ssh/id_rsa
-      #    ssh-keyscan -H ${{ secrets.DEV_EC2_IP }} >> ~/.ssh/known_hosts
+      - name: Set up SSH
+        run: |
+         mkdir -p ~/.ssh
+         echo "${{ secrets.DEV_EC2_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+         chmod 600 ~/.ssh/id_rsa
+         ssh-add ~/.ssh/id_rsa
+         ssh-keyscan -H ${{ secrets.DEV_EC2_IP }} >> ~/.ssh/known_hosts
 
       # Step to log in to Amazon ECR (Elastic Container Registry)
       - name: Login to Amazon ECR
@@ -53,7 +54,7 @@ jobs:
       # Step to deploy the Docker image to the EC2 instance
       - name: Deploy to EC2
         run: |
-          ssh -T -o StrictHostKeyChecking=no ${{ secrets.DEV_EC2_USER }}@${{ secrets.DEV_EC2_IP }} << 'EOF'
+          ssh -T -o StrictHostKeyChecking=no -o GSSAPIAuthentication=no ${{ secrets.DEV_EC2_USER }}@${{ secrets.DEV_EC2_IP }} << 'EOF'
             # Install git if not already installed
             sudo yum install git -y  # Assuming Ubuntu; adjust for other distributions as necessary
 
