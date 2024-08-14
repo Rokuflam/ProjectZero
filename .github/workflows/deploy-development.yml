@@ -28,12 +28,12 @@ jobs:
           aws-region: ${{ secrets.DEV_AWS_REGION }}
 
       # Step to set up SSH access to the EC2 instance
-      - name: Set up SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.DEV_EC2_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.DEV_EC2_IP }} >> ~/.ssh/known_hosts
+      #- name: Set up SSH
+      #  run: |
+      #    mkdir -p ~/.ssh
+      #    echo "${{ secrets.DEV_EC2_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+      #    chmod 600 ~/.ssh/id_rsa
+      #    ssh-keyscan -H ${{ secrets.DEV_EC2_IP }} >> ~/.ssh/known_hosts
 
       # Step to log in to Amazon ECR (Elastic Container Registry)
       - name: Login to Amazon ECR
