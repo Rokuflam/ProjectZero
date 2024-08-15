@@ -160,6 +160,6 @@ cython_debug/
 .idea/
 
 # Terraform
-# terraform.tfvars*
-# .terraform*
-# terraform.tfstate*
+terraform.tfvars*
+.terraform*
+terraform.tfstate*
