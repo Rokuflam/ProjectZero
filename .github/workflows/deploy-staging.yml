@@ -1,0 +1,53 @@
+# Workflow name for deploying to the staging environment
+name: Deploy to Staging env
+
+# Trigger the workflow on push events to the "staging" branch
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  # Define a job named "build_and_deploy" that runs on the latest Ubuntu environment
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step to check out the code from the "staging" branch
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: staging
+
+      # Step to configure AWS credentials using secrets stored in GitHub
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.stage_AWS_REGION }}
+
+      # Step to log in to Amazon ECR (Elastic Container Registry)
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      # Step to build, tag, and push the Docker image to ECR
+      - name: Build, tag, and push image to ECR
+        run: |
+          docker build --no-cache -t ${{ steps.login-ecr.outputs.registry }}/${{ secrets.stage_ECR_REPOSITORY }}:${{ github.sha }} -f docker/stage.Dockerfile .
+          docker push ${{ steps.login-ecr.outputs.registry }}/${{ secrets.stage_ECR_REPOSITORY }}:${{ github.sha }}
+        env:
+          AWS_REGION: ${{ secrets.stage_AWS_REGION }}
+          ECR_REPOSITORY: ${{ secrets.stage_ECR_REPOSITORY }}
+          IMAGE_TAG: ${{ github.sha }}
+
+      # Step to update the ECS service with the new image
+      - name: Deploy to ECS
+        run: |
+          aws ecs update-service --cluster ${{ secrets.stage_ECS_CLUSTER }} --service ${{ secrets.stage_ECS_SERVICE }} --force-new-deployment --task-definition ${{ secrets.stage_ECS_TASK_DEFINITION }}
+        env:
+          AWS_REGION: ${{ secrets.stage_AWS_REGION }}
+          ECS_CLUSTER: ${{ secrets.stage_ECS_CLUSTER }}
+          ECS_SERVICE: ${{ secrets.stage_ECS_SERVICE }}
+          TASK_DEFINITION: ${{ secrets.stage_ECS_TASK_DEFINITION }}

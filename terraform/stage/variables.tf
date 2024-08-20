@@ -65,3 +65,36 @@ variable "ecr_repository" {
   description = "The name of the ECR repository"
   default     = "app-repo"
 }
+
+variable "subnets" {
+  description = "The subnets where the ECS service will be deployed"
+  type        = list(string)
+}
+
+# The Docker image tag to be used in the ECS task definition.
+# This variable allows specifying the version of the image to deploy.
+variable "image_tag" {
+  description = "The Docker image tag to use in the ECS task definition"
+  default     = "latest"
+}
+
+# The ARN of the ECS task execution role.
+# This role allows the ECS tasks to interact with AWS services like ECR.
+variable "ecs_task_execution_role_arn" {
+  description = "The ARN of the ECS task execution role"
+  type        = string
+}
+
+# The ECS cluster name.
+# This variable specifies the name of the ECS cluster where the service will run.
+variable "ecs_cluster_name" {
+  description = "The name of the ECS cluster"
+  default     = "development-cluster"
+}
+
+# The name of the ECS service.
+# This variable specifies the name of the ECS service within the cluster.
+variable "ecs_service_name" {
+  description = "The name of the ECS service"
+  default     = "development-service"
+}
