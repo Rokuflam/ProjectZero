@@ -1,28 +1,28 @@
-# Define the AWS provider, using the region specified in the variables
+# Define the AWS provider using the specified region
 provider "aws" {
   region = var.aws_region
 }
 
-# Define the GitHub provider, using the token specified in the variables
+# Define the GitHub provider using the token specified in the variables
 provider "github" {
   token = var.github_token
 }
 
-# Read the local private key file, storing its contents for later use
+# Read the local private key file and store its contents for later use
 data "local_file" "private_key" {
   filename = var.private_key_path
 }
 
-# Create an AWS key pair resource for deployment, using the public key specified in the variables
+# Create an AWS key pair for deployment using the public key specified in the variables
 resource "aws_key_pair" "staging_deployer" {
   key_name   = "deployer-staging-key"
   public_key = file(var.public_key_path)
 }
 
-# Define a security group for the staging environment, allowing SSH, HTTP, HTTPS inbound traffic
+# Define a security group for the staging environment allowing SSH, HTTP, HTTPS, and PostgreSQL inbound traffic
 resource "aws_security_group" "sg_staging_ssh" {
   name        = "sg_staging_ssh"
-  description = "Allow SSH inbound traffic"
+  description = "Allow SSH, HTTP, HTTPS, and PostgreSQL inbound traffic"
   vpc_id      = var.vpc_id
 
   # Allow SSH traffic on port 22 from any IP address
@@ -49,6 +49,14 @@ resource "aws_security_group" "sg_staging_ssh" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  # Allow PostgreSQL traffic on port 5432 from any IP address (adjust as needed for security)
+  ingress {
+    from_port   = 5432
+    to_port     = 5432
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]  # For better security, replace with specific IP ranges
+  }
+
   # Allow all outbound traffic from the instance
   egress {
     from_port   = 0
@@ -65,7 +73,7 @@ resource "aws_instance" "staging" {
   security_groups = [aws_security_group.sg_staging_ssh.name]
   key_name      = aws_key_pair.staging_deployer.key_name
 
-  # Set up the instance with Docker, Docker Compose, and Git, and configure SSH for GitHub access
+  # Set up the instance with Docker, Docker Compose, Git, and configure SSH for GitHub access
   user_data = <<-EOF
             #!/bin/bash
             # Install Docker
@@ -155,16 +163,16 @@ resource "github_actions_secret" "staging_ecr_repository" {
 
 # Store the GitHub repository name as a GitHub Actions secret
 resource "github_actions_secret" "repository_name" {
-  repository = var.github_repository
-  secret_name = "REPOSITORY_NAME"
-  plaintext_value = var.github_repository
+  repository       = var.github_repository
+  secret_name      = "REPOSITORY_NAME"
+  plaintext_value  = var.github_repository
 }
 
 # Store the SSH clone link of the GitHub repository as a GitHub Actions secret
 resource "github_actions_secret" "ssh_clone_link" {
-  repository = var.github_repository
-  secret_name = "SSH_CLONE_LINK"
-  plaintext_value = var.github_repository_ssh_clone_url
+  repository       = var.github_repository
+  secret_name      = "SSH_CLONE_LINK"
+  plaintext_value  = var.github_repository_ssh_clone_url
 }
 
 # Define an RDS instance for the staging environment (PostgreSQL)
@@ -187,7 +195,6 @@ resource "aws_db_instance" "staging_rds" {
     Name = "staging-rds"
   }
 }
-
 
 # Define an ElastiCache Redis cluster for the staging environment
 resource "aws_elasticache_cluster" "staging_redis" {
