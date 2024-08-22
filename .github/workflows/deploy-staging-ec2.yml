@@ -65,13 +65,13 @@ jobs:
             fi
             cd ${{ secrets.REPOSITORY_NAME }}
 
-            # Ensure you're on the development branch and sync with origin
-            git checkout development
-            git fetch origin development
+            # Ensure you're on the staging branch and sync with origin
+            git checkout staging
+            git fetch origin staging
 
             # Reset local changes to allow a clean pull
-            git reset --hard origin/development
-            git pull origin development
+            git reset --hard origin/staging
+            git pull origin staging
 
             # Check if example.env exists and copy it to .env if it does
             if [ ! -f "./env_files/.env" ]; then
