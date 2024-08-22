@@ -17,7 +17,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          ref: development
+          ref: staging
 
       # Step to configure AWS credentials using secrets stored in GitHub
       - name: Configure AWS credentials
