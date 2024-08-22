@@ -285,3 +285,18 @@ ANYMAIL = {
     'MAILGUN_API_KEY': os.environ.get('MAILGUN_API_KEY', 'your-mailgun-api-key'),
     'MAILGUN_SENDER_DOMAIN': os.environ.get('MAILGUN_SENDER_DOMAIN', 'your-mailgun-domain.com'),
 }
+
+# Cache settings
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': f"redis://{os.environ.get('REDIS_HOST', 'redis')}:6379/1",
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
+
+# Example of using the cache
+# CACHE_TTL = 60 * 1  # Cache time-to-live in second

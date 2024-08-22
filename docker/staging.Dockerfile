@@ -35,4 +35,4 @@ ENV PATH="/scripts:/py/bin:$PATH"
 
 USER django-user
 
-CMD ["dev.entrypoint.sh"]
+CMD ["staging.entrypoint.sh"]

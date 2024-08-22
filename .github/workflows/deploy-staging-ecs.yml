@@ -5,7 +5,7 @@ name: Deploy to Staging env
 on:
   push:
     branches:
-      - staging
+      - change_me
 
 jobs:
   # Define a job named "build_and_deploy" that runs on the latest Ubuntu environment
